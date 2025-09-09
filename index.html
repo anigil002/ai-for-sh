@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Academy - Phase 1: AI Foundations</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
     <style>
         :root {
-            --primary-color: #38e07b;
+            --primary-color: #1193d4;
             --bg-primary: #111714;
             --bg-secondary: #1c2620;
             --bg-tertiary: #29382f;
@@ -69,7 +69,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            color: var(--bg-primary);
+            color: white;
             font-weight: 800;
         }
 
@@ -141,7 +141,7 @@
             border-radius: 4px;
             width: 0%;
             transition: width 0.6s ease;
-            box-shadow: 0 0 20px rgba(56, 224, 123, 0.3);
+            box-shadow: 0 0 20px rgba(17, 147, 212, 0.3);
         }
 
         .progress-text {
@@ -314,8 +314,8 @@
         }
 
         .example-box {
-            background: rgba(56, 224, 123, 0.1);
-            border: 1px solid rgba(56, 224, 123, 0.2);
+            background: rgba(17, 147, 212, 0.1);
+            border: 1px solid rgba(17, 147, 212, 0.2);
             border-radius: 8px;
             padding: 1rem;
             margin: 1rem 0;
@@ -331,7 +331,7 @@
         }
 
         .fun-fact {
-            background: linear-gradient(135deg, rgba(56, 224, 123, 0.1), rgba(74, 222, 128, 0.05));
+            background: linear-gradient(135deg, rgba(17, 147, 212, 0.1), rgba(74, 222, 128, 0.05));
             border: 1px dashed var(--primary-color);
             border-radius: 8px;
             padding: 1rem;
@@ -397,8 +397,8 @@
         }
 
         .answer {
-            background: rgba(56, 224, 123, 0.1);
-            border: 1px solid rgba(56, 224, 123, 0.2);
+            background: rgba(17, 147, 212, 0.1);
+            border: 1px solid rgba(17, 147, 212, 0.2);
             border-radius: 6px;
             padding: 1rem;
             margin-top: 0.75rem;
@@ -419,7 +419,7 @@
 
         .nav-btn {
             background: linear-gradient(135deg, var(--primary-color), #4ade80);
-            color: var(--bg-primary);
+            color: white;
             border: none;
             padding: 0.75rem 1.5rem;
             border-radius: 8px;
@@ -434,7 +434,7 @@
 
         .nav-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 24px rgba(56, 224, 123, 0.3);
+            box-shadow: 0 8px 24px rgba(17, 147, 212, 0.3);
         }
 
         .nav-btn:disabled {
@@ -471,7 +471,7 @@
 
         .next-phase-btn {
             background: linear-gradient(135deg, var(--primary-color), #4ade80);
-            color: var(--bg-primary);
+            color: white;
             border: none;
             padding: 1rem 2rem;
             border-radius: 8px;
@@ -488,7 +488,7 @@
 
         .next-phase-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 24px rgba(56, 224, 123, 0.4);
+            box-shadow: 0 8px 24px rgba(17, 147, 212, 0.4);
         }
 
         @media (max-width: 768px) {
@@ -1239,256 +1239,291 @@
                     <span class="difficulty-badge difficult">DIFFICULT</span>
                     <div class="question-text">A legal AI assistant needs to draft contracts that are both legally sound and tailored to specific situations. How might different generation parameters be used throughout the drafting process, and what risks need to be managed?</div>
                     <div class="answer" id="q24">
-                        <strong>Answer:</strong> The process might use: 1) Low temperature for standard legal clauses to ensure accuracy, 2) Moderate temperature for customizing clauses to specific situations, 3) Very low temperature for critical legal language that must be precise. Risks include: legal liability if AI creates incorrect clauses, need for human lawyer review, potential hallucination of non-existent laws, and ensuring the AI doesn't create contradictory terms. The system would likely use conservative parameters with extensive human oversight, and might use retrieval systems to reference actual legal precedents rather than generating legal concepts from scratch.
+                        <strong>Answer:</strong> The process might use: 1) Low temperature for standard legal clauses to ensure accuracy, 2) Moderate temperature for customizing clauses to specific situations, 3) Very low temperature for critical legal language that must be precise. Risks include: legal liability if AI creates incorrect clauses, need for human lawyer review, potential hallucination of non-existent laws or precedents. Risk management requires: mandatory human oversight, confidence scoring for all generated content, version control for prompts and outputs, and clear disclaimers about AI limitations.
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Section 9: Prompt Engineering -->
+        <!-- Section 9: Prompt Engineering Introduction -->
         <div class="section" id="section8">
-        <div class="concept-card">
-            <div class="concept-title">
-                <span class="material-symbols-outlined">chat</span>
-                The Art of Asking AI
-            </div>
-            <div class="concept-description">
-                Prompt engineering is like learning how to ask really good questions. Just like how asking your friend "What should I do?" gives a vague answer, but asking "What's a fun, indoor activity for a rainy Saturday that costs under $20?" gets you exactly what you need. The way you ask AI determines the quality of response you get.
-            </div>
+            <h2>
+                <span class="material-symbols-outlined">edit</span>
+                Introduction to Prompt Engineering
+            </h2>
             
-            <div class="example-box">
-                <div class="example-title">
-                    <span class="material-symbols-outlined">work</span>
-                    Real-World Example: Job Interview Preparation
+            <div class="concept-card">
+                <div class="concept-title">
+                    <span class="material-symbols-outlined">chat</span>
+                    What is Prompt Engineering?
                 </div>
-                <p><strong>Bad Prompt:</strong> "Help me with interview questions."<br>
-                <strong>Good Prompt:</strong> "I'm interviewing for a marketing manager role at a tech startup. Create 10 behavioral interview questions they might ask, with example STAR method answers focusing on digital marketing campaigns and team leadership experience."<br><br>
-                The specific prompt gives you exactly what you need to practice!</p>
-            </div>
-        </div>
-
-        <div class="concept-card">
-            <div class="concept-title">
-                <span class="material-symbols-outlined">build</span>
-                Prompt Engineering Techniques
-            </div>
-            <div class="concept-description">
-                <strong>Be Specific:</strong> Include details about what you want, how you want it, and who it's for.<br><br>
-                <strong>Give Examples:</strong> Show the AI what good output looks like.<br><br>
-                <strong>Set the Role:</strong> Tell the AI to act as an expert in the field.<br><br>
-                <strong>Define the Format:</strong> Specify if you want bullets, paragraphs, tables, etc.
-            </div>
-
-            <div class="example-box">
-                <div class="example-title">
-                    <span class="material-symbols-outlined">restaurant</span>
-                    Real-World Example: Recipe Creation
+                <div class="concept-description">
+                    Prompt engineering is the art and science of crafting effective instructions for AI models to get exactly the response you need. Think of it like being a director giving instructions to an incredibly talented but literal actor - the clearer and more specific your directions, the better the performance you'll get.
                 </div>
-                <p><strong>Basic:</strong> "Give me a recipe."<br>
-                <strong>Engineered:</strong> "You are a professional chef. Create a healthy, 30-minute dinner recipe for 4 people using chicken breast, vegetables, and minimal oil. Include prep time, cooking steps numbered clearly, and nutritional information. Make it suitable for beginners who don't have advanced cooking skills."<br><br>
-                The engineered prompt gives you a complete, usable recipe!</p>
-            </div>
-
-            <div class="fun-fact">
-                <h4>💼 Career Opportunity</h4>
-                <p>Prompt Engineering is becoming a real job! Companies are hiring "Prompt Engineers" who specialize in getting the best results from AI systems. Some positions pay over $300,000 per year!</p>
-            </div>
-        </div>
-
-        <div class="quiz-section">
-            <div class="quiz-title">🧩 Test Your Understanding</div>
-            
-            <div class="question-card" onclick="toggleAnswer('q25')">
-                <span class="difficulty-badge easy">EASY</span>
-                <div class="question-text">What's wrong with the prompt "Make it better" when asking AI to improve your writing?</div>
-                <div class="answer" id="q25">
-                    <strong>Answer:</strong> It's too vague! The AI doesn't know what "better" means to you. Does it mean shorter, longer, more formal, simpler, more persuasive? A better prompt would specify exactly what improvements you want, like "Make this email more professional and concise, keeping it under 100 words."
+                
+                <div class="example-box">
+                    <div class="example-title">
+                        <span class="material-symbols-outlined">compare</span>
+                        Real-World Example: Writing Instructions
+                    </div>
+                    <p><strong>Vague Prompt:</strong> "Write something about dogs."<br>
+                    <strong>Clear Prompt:</strong> "Write a 3-paragraph informative article about golden retrievers for dog owners, covering their temperament, exercise needs, and grooming requirements."<br><br>
+                    The second prompt gives the AI clear context, specific information, and guidance on format - resulting in a much more useful response!</p>
                 </div>
             </div>
 
-            <div class="question-card" onclick="toggleAnswer('q26')">
-                <span class="difficulty-badge medium">MEDIUM</span>
-                <div class="question-text">You want AI to help create social media content for your pet grooming business. Write a well-engineered prompt that would get you useful, branded content.</div>
-                <div class="answer" id="q26">
-                    <strong>Answer:</strong> "You are a social media marketing expert for pet businesses. Create 5 Instagram post ideas for a friendly, local pet grooming salon called 'Pawsome Cuts.' Each post should include: a catchy caption under 150 characters, relevant hashtags, and suggest what type of photo to use. Focus on showcasing happy pets, grooming tips, and building trust with pet parents. Keep the tone warm, professional, and dog/cat-loving."
+            <div class="concept-card">
+                <div class="concept-title">
+                    <span class="material-symbols-outlined">construction</span>
+                    Components of Effective Prompts
+                </div>
+                <div class="concept-description">
+                    Every great prompt has key components working together:
+                    <br><br>
+                    <strong>Instructions:</strong> Clear, specific directions about what you want<br>
+                    <strong>Context:</strong> Background information the AI needs to know<br>
+                    <strong>Input Data:</strong> The specific content to process<br>
+                    <strong>Output Format:</strong> How you want the response structured<br>
+                    <strong>Examples:</strong> Demonstrations of the desired input-output pattern
+                </div>
+
+                <div class="example-box">
+                    <div class="example-title">
+                        <span class="material-symbols-outlined">business</span>
+                        Real-World Example: Business Email
+                    </div>
+                    <p><strong>Instruction:</strong> Write a professional follow-up email<br>
+                    <strong>Context:</strong> Meeting with potential client yesterday about website redesign project<br>
+                    <strong>Input:</strong> Client expressed interest but mentioned budget concerns<br>
+                    <strong>Format:</strong> Professional business email with subject line<br>
+                    <strong>Tone:</strong> Friendly but professional, addressing their budget concerns</p>
+                </div>
+
+                <div class="fun-fact">
+                    <h4>🎯 Success Rate</h4>
+                    <p>Well-engineered prompts can improve AI output quality by 40-60% compared to basic prompts. Companies with dedicated prompt engineering teams report faster workflows and better customer experiences!</p>
                 </div>
             </div>
 
-            <div class="question-card" onclick="toggleAnswer('q27')">
-                <span class="difficulty-badge difficult">DIFFICULT</span>
-                <div class="question-text">A medical research team wants to use AI to help analyze patient symptoms and suggest possible diagnoses for doctors to consider. What are the critical considerations for engineering prompts in this high-stakes scenario?</div>
-                <div class="answer" id="q27">
-                    <strong>Answer:</strong> Critical considerations include: 1) Never suggesting definitive diagnoses, only "considerations for evaluation," 2) Always emphasizing the need for professional medical judgment, 3) Including disclaimers about emergency situations, 4) Structuring prompts to request evidence-based reasoning, 5) Asking for differential diagnoses ranked by likelihood with supporting evidence, 6) Requesting red flag symptoms that require immediate attention, 7) Ensuring prompts don't lead to bias (age, gender, race), and 8) Including requirements to cite medical literature or guidelines. The prompt must make clear the AI is a research tool, not a diagnostic tool, and all outputs require physician review.
+            <div class="quiz-section">
+                <div class="quiz-title">🧩 Test Your Understanding</div>
+                
+                <div class="question-card" onclick="toggleAnswer('q25')">
+                    <span class="difficulty-badge easy">EASY</span>
+                    <div class="question-text">What's wrong with the prompt "Make it better"?</div>
+                    <div class="answer" id="q25">
+                        <strong>Answer:</strong> This prompt is far too vague! It doesn't specify what "it" is, what "better" means, or provide any context. The AI has no clear direction on what to improve or how to improve it. A better prompt would specify exactly what needs improvement and what criteria define "better" in that context.
+                    </div>
+                </div>
+
+                <div class="question-card" onclick="toggleAnswer('q26')">
+                    <span class="difficulty-badge medium">MEDIUM</span>
+                    <div class="question-text">A marketing manager wants AI to create social media posts for their organic skincare brand. What essential components should they include in their prompt?</div>
+                    <div class="answer" id="q26">
+                        <strong>Answer:</strong> Essential components: 1) <strong>Role:</strong> "You are a social media marketing expert for organic skincare," 2) <strong>Context:</strong> Brand values (organic, natural, eco-friendly), target audience (health-conscious consumers), 3) <strong>Instructions:</strong> Create engaging posts that highlight product benefits, 4) <strong>Format:</strong> Specify platform (Instagram, Facebook, etc.) and requirements (hashtags, character limits), 5) <strong>Tone:</strong> Warm, trustworthy, educational, and 6) <strong>Examples:</strong> Show 1-2 sample posts they liked from competitors or previous campaigns.
+                    </div>
+                </div>
+
+                <div class="question-card" onclick="toggleAnswer('q27')">
+                    <span class="difficulty-badge difficult">DIFFICULT</span>
+                    <div class="question-text">A legal firm wants to use AI to help draft contract clauses, but they're concerned about accuracy and liability. How should they engineer their prompts to maximize reliability while maintaining appropriate safeguards?</div>
+                    <div class="answer" id="q27">
+                        <strong>Answer:</strong> They should implement multiple safeguards: 1) <strong>Role specification:</strong> "You are a legal research assistant, not a licensed attorney," 2) <strong>Clear limitations:</strong> "Provide draft language that requires attorney review and approval," 3) <strong>Reference requirements:</strong> "Base suggestions on provided legal templates and precedents only," 4) <strong>Disclaimers:</strong> Always require human lawyer verification, 5) <strong>Structured output:</strong> Request citations to legal sources, confidence levels, and alternative approaches, 6) <strong>Context provision:</strong> Include relevant statutes, regulations, and firm-specific language preferences, 7) <strong>Version control:</strong> Track prompt iterations and AI responses for audit trails. Most importantly, they should never rely solely on AI output for final legal documents.
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div class="phase-complete">
-            <h3>🎉 Phase 1 Complete!</h3>
-            <p>Congratulations! You've completed Phase 1 of your AI journey! You now understand the fundamentals of AI, from basic concepts to practical applications. You're now ready to move on to Phase 2, where we'll dive deeper into Context Engineering and Advanced Prompt Engineering techniques.</p>
-            
-            <div style="margin: 2rem 0;">
-                <h4>🚀 Your Next Steps</h4>
-                <p>In Phase 2, you'll learn:</p>
+            <div class="phase-complete">
+                <h3>🎉 Congratulations! Phase 1 Complete</h3>
+                <p>You've successfully mastered the foundations of AI! You now understand:</p>
                 <ul>
-                    <li>Advanced prompt engineering strategies</li>
-                    <li>Context engineering for complex AI applications</li>
-                    <li>Memory management in long AI conversations</li>
-                    <li>Integrating external knowledge with AI</li>
-                    <li>Professional implementation techniques</li>
+                    <li>What AI is and how it works</li>
+                    <li>Machine learning types and applications</li>
+                    <li>How Large Language Models function</li>
+                    <li>The power of Transformer architecture</li>
+                    <li>Vector databases and embeddings</li>
+                    <li>Generative AI capabilities</li>
+                    <li>Context windows and tokens</li>
+                    <li>AI parameter controls</li>
+                    <li>Basic prompt engineering principles</li>
                 </ul>
-                <p>Click the button below to continue your learning journey!</p>
+                <a href="#" class="next-phase-btn" onclick="nextPhase()">
+                    Continue to Phase 2: Advanced Prompt Engineering
+                    <span class="material-symbols-outlined">arrow_forward</span>
+                </a>
             </div>
+        </div>
 
-            <a href="#" class="next-phase-btn">
-                Continue to Phase 2: Advanced Training
+        <div class="navigation">
+            <button class="nav-btn" id="prevBtn" onclick="previousSection()" disabled>
+                <span class="material-symbols-outlined">arrow_back</span>
+                Previous
+            </button>
+            <button class="nav-btn" id="nextBtn" onclick="nextSection()">
+                Next
                 <span class="material-symbols-outlined">arrow_forward</span>
-            </a>
+            </button>
         </div>
     </div>
 
-    <!-- Navigation -->
-    <div class="navigation">
-        <button class="nav-btn" id="prevBtn" onclick="previousSection()" disabled>
-            <span class="material-symbols-outlined">arrow_back</span>
-            Previous
-        </button>
-        <button class="nav-btn" id="nextBtn" onclick="nextSection()">
-            Next
-            <span class="material-symbols-outlined">arrow_forward</span>
-        </button>
-    </div>
-</div>
+    <script>
+        let currentSection = 0;
+        const totalSections = 9;
+        const completedSections = new Set();
 
-<script>
-    let currentSection = 0;
-    const totalSections = 9;
-    const completedSections = new Set();
-
-    function updateProgress() {
-        const progress = ((currentSection + 1) / totalSections) * 100;
-        document.getElementById('progressFill').style.width = progress + '%';
-        document.getElementById('progressText').textContent = 
-            `Section ${currentSection + 1} of ${totalSections} - ${getSectionTitle(currentSection)}`;
-    }
-
-    function getSectionTitle(index) {
-        const titles = [
-            "Understanding AI",
-            "Machine Learning",
-            "Language Models",
-            "Transformers",
-            "Vector Databases",
-            "Generative AI",
-            "Context & Tokens",
-            "AI Parameters",
-            "Prompt Engineering"
-        ];
-        return titles[index];
-    }
-
-    function showSection(index) {
-        // Hide all sections
-        document.querySelectorAll('.section').forEach(section => {
-            section.classList.remove('active');
-        });
-        
-        // Show current section
-        document.getElementById(`section${index}`).classList.add('active');
-        
-        // Update navigation buttons
-        document.getElementById('prevBtn').disabled = index === 0;
-        document.getElementById('nextBtn').disabled = index === totalSections - 1;
-        
-        if (index === totalSections - 1) {
-            document.getElementById('nextBtn').innerHTML = 
-                'Phase Complete! <span class="material-symbols-outlined">celebration</span>';
-        } else {
-            document.getElementById('nextBtn').innerHTML = 
-                'Next <span class="material-symbols-outlined">arrow_forward</span>';
+        function updateProgress() {
+            const progress = ((currentSection + 1) / totalSections) * 100;
+            document.getElementById('progressFill').style.width = progress + '%';
+            document.getElementById('progressText').textContent = 
+                `Section ${currentSection + 1} of ${totalSections} - ${getSectionTitle(currentSection)}`;
         }
-        
-        // Update table of contents
-        updateTableOfContents();
-        
-        // Mark section as completed when viewed
-        completedSections.add(index);
-        
-        // Update progress
-        updateProgress();
-        
-        // Scroll to top
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
 
-    function updateTableOfContents() {
-        const tocItems = document.querySelectorAll('.toc-item');
-        tocItems.forEach((item, index) => {
-            item.classList.remove('active', 'completed');
-            if (index === currentSection) {
-                item.classList.add('active');
-            } else if (completedSections.has(index)) {
-                item.classList.add('completed');
+        function getSectionTitle(index) {
+            const titles = [
+                "Understanding AI Basics",
+                "Machine Learning Fundamentals", 
+                "Large Language Models",
+                "Transformer Architecture",
+                "Vector Databases & Embeddings",
+                "Generative AI Concepts",
+                "Context & Token Management",
+                "AI Parameter Controls",
+                "Prompt Engineering Introduction"
+            ];
+            return titles[index];
+        }
+
+        function showSection(index) {
+            // Hide all sections
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Show current section
+            document.getElementById(`section${index}`).classList.add('active');
+            
+            // Update navigation buttons
+            document.getElementById('prevBtn').disabled = index === 0;
+            document.getElementById('nextBtn').disabled = index === totalSections - 1;
+            
+            if (index === totalSections - 1) {
+                document.getElementById('nextBtn').textContent = 'Phase Complete!';
+                document.getElementById('nextBtn').innerHTML = 'Phase Complete! <span class="material-symbols-outlined">check_circle</span>';
+            } else {
+                document.getElementById('nextBtn').innerHTML = 'Next <span class="material-symbols-outlined">arrow_forward</span>';
+            }
+            
+            // Update table of contents
+            updateTableOfContents();
+            
+            // Mark section as completed when viewed
+            completedSections.add(index);
+            
+            // Update progress
+            updateProgress();
+            
+            // Scroll to top
+            window.scrollTo(0, 0);
+        }
+
+        function updateTableOfContents() {
+            const tocItems = document.querySelectorAll('.toc-item');
+            tocItems.forEach((item, index) => {
+                item.classList.remove('active', 'completed');
+                if (index === currentSection) {
+                    item.classList.add('active');
+                } else if (completedSections.has(index)) {
+                    item.classList.add('completed');
+                }
+            });
+        }
+
+        function nextSection() {
+            if (currentSection < totalSections - 1) {
+                currentSection++;
+                showSection(currentSection);
+            }
+        }
+
+        function previousSection() {
+            if (currentSection > 0) {
+                currentSection--;
+                showSection(currentSection);
+            }
+        }
+
+        function goToSection(index) {
+            currentSection = index;
+            showSection(currentSection);
+        }
+
+        function toggleAnswer(questionId) {
+            const answer = document.getElementById(questionId);
+            const isVisible = answer.style.display === 'block';
+            answer.style.display = isVisible ? 'none' : 'block';
+            
+            // Add animation effect
+            if (!isVisible) {
+                answer.style.opacity = '0';
+                setTimeout(() => {
+                    answer.style.opacity = '1';
+                    answer.style.transition = 'opacity 0.4s ease';
+                }, 10);
+            }
+        }
+
+        function nextPhase() {
+            alert('🎉 Congratulations on completing Phase 1!\n\nYou\'re now ready for Phase 2: Advanced Context & Prompt Engineering.\n\nIn the next phase, you\'ll learn:\n• Advanced prompting techniques\n• Context engineering\n• Managing long conversations\n• Incorporating external knowledge\n• And much more!');
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'ArrowLeft') {
+                previousSection();
+            } else if (event.key === 'ArrowRight') {
+                nextSection();
             }
         });
-    }
 
-    function nextSection() {
-        if (currentSection < totalSections - 1) {
-            currentSection++;
-            showSection(currentSection);
-        }
-    }
-
-    function previousSection() {
-        if (currentSection > 0) {
-            currentSection--;
-            showSection(currentSection);
-        }
-    }
-
-    function goToSection(index) {
-        currentSection = index;
-        showSection(currentSection);
-    }
-
-    function toggleAnswer(questionId) {
-        const answer = document.getElementById(questionId);
-        const isVisible = answer.style.display === 'block';
-        answer.style.display = isVisible ? 'none' : 'block';
+        // Initialize
+        updateProgress();
+        updateTableOfContents();
         
-        if (!isVisible) {
-            answer.style.opacity = '0';
-            setTimeout(() => {
-                answer.style.opacity = '1';
-                answer.style.transition = 'opacity 0.4s ease';
-            }, 10);
-        }
-    }
-
-    // Keyboard navigation
-    document.addEventListener('keydown', function(event) {
-        if (event.key === 'ArrowLeft') {
-            previousSection();
-        } else if (event.key === 'ArrowRight') {
-            nextSection();
-        }
-    });
-
-    // Initialize
-    updateProgress();
-    updateTableOfContents();
-    
-    // Add interaction feedback
-    document.querySelectorAll('.question-card').forEach(card => {
-        card.addEventListener('click', function() {
-            this.style.transform = 'scale(0.98) translateY(-2px)';
-            setTimeout(() => {
-                this.style.transform = 'translateY(-2px)';
-            }, 150);
+        // Enhanced interaction feedback
+        document.querySelectorAll('.question-card').forEach(card => {
+            card.addEventListener('click', function() {
+                this.style.transform = 'scale(0.98)';
+                setTimeout(() => {
+                    this.style.transform = 'scale(1)';
+                }, 150);
+            });
         });
-    });
-    
-    // Set initial progress
-    document.getElementById('progressFill').style.width = `${(100 / totalSections)}%`;
-</script>
+
+        // Add smooth scrolling for navigation
+        document.querySelectorAll('.nav-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                this.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    this.style.transform = 'scale(1)';
+                }, 100);
+            });
+        });
+
+        // Add hover effects for TOC items
+        document.querySelectorAll('.toc-item').forEach(item => {
+            item.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-2px)';
+            });
+            
+            item.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+            });
+        });
+
+        // Progress bar animation on load
+        setTimeout(() => {
+            updateProgress();
+        }, 500);
+    </script>
+</body>
+</html>
