@@ -1509,14 +1509,14 @@
             });
         });
 
-        // Add hover effects for TOC items
-        document.querySelectorAll('.toc-item').forEach(item => {
+        // Add hover effects for sidebar TOC items
+        document.querySelectorAll('.sidebar-toc-item').forEach(item => {
             item.addEventListener('mouseenter', function() {
-                this.style.transform = 'translateY(-2px)';
+                this.style.transform = 'translateX(4px)';
             });
             
             item.addEventListener('mouseleave', function() {
-                this.style.transform = 'translateY(0)';
+                this.style.transform = 'translateX(0)';
             });
         });
 
