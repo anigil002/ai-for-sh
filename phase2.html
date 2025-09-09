@@ -1,1 +1,2769 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Academy - Phase 2: Advanced Context & Prompt Engineering</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #1193d4;
+            --bg-primary: #111714;
+            --bg-secondary: #1c2620;
+            --bg-tertiary: #29382f;
+            --text-primary: #ffffff;
+            --text-secondary: #9eb7a8;
+            --text-accent: #38e07b;
+            --border-color: #3d5245;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
 
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .header {
+            border-bottom: 1px solid var(--bg-tertiary);
+            padding: 1rem 2rem;
+            backdrop-filter: blur(20px);
+            background: rgba(17, 23, 20, 0.9);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            background: var(--primary-color);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 800;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .back-to-phase1 {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 8px;
+            padding: 0.5rem 1rem;
+            color: var(--text-primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            font-size: 0.9rem;
+        }
+
+        .back-to-phase1:hover {
+            background: var(--bg-tertiary);
+            border-color: var(--primary-color);
+        }
+
+        .menu-toggle {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 8px;
+            padding: 0.5rem;
+            cursor: pointer;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .menu-toggle:hover {
+            background: var(--bg-tertiary);
+            border-color: var(--primary-color);
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            position: fixed;
+            left: -380px;
+            top: 0;
+            width: 380px;
+            height: 100vh;
+            background: var(--bg-secondary);
+            border-right: 1px solid var(--border-color);
+            z-index: 200;
+            transition: left 0.3s ease;
+            overflow-y: auto;
+            backdrop-filter: blur(20px);
+        }
+
+        .sidebar.open {
+            left: 0;
+        }
+
+        .sidebar-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .sidebar-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .close-sidebar {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            padding: 0.25rem;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .close-sidebar:hover {
+            color: var(--text-primary);
+            background: var(--glass-bg);
+        }
+
+        .sidebar-content {
+            padding: 1rem;
+        }
+
+        .sidebar-toc-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem;
+            margin-bottom: 0.5rem;
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .sidebar-toc-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 3px;
+            background: transparent;
+            transition: background 0.3s ease;
+        }
+
+        .sidebar-toc-item:hover {
+            background: var(--bg-tertiary);
+            transform: translateX(4px);
+            border-color: var(--primary-color);
+        }
+
+        .sidebar-toc-item:hover::before {
+            background: var(--primary-color);
+        }
+
+        .sidebar-toc-item.active {
+            background: var(--bg-tertiary);
+            border-color: var(--primary-color);
+        }
+
+        .sidebar-toc-item.active::before {
+            background: var(--primary-color);
+        }
+
+        .sidebar-toc-item.completed {
+            opacity: 0.8;
+        }
+
+        .sidebar-toc-item.completed::before {
+            background: #4ade80;
+        }
+
+        .sidebar-toc-number {
+            min-width: 28px;
+            height: 28px;
+            background: var(--bg-tertiary);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 0.875rem;
+            color: var(--primary-color);
+        }
+
+        .sidebar-toc-content h4 {
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.125rem;
+            color: var(--text-primary);
+        }
+
+        .sidebar-toc-content p {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            line-height: 1.3;
+        }
+
+        .sidebar-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 150;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .sidebar-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            transition: padding-left 0.3s ease;
+        }
+
+        .container.sidebar-open {
+            padding-left: 22rem;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 3rem 0;
+            background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+        }
+
+        .phase-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 0.5rem 1rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--text-primary) 0%, var(--primary-color) 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto 2rem;
+        }
+
+        .progress-section {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: var(--bg-tertiary);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 1rem;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-color), #4ade80);
+            border-radius: 4px;
+            width: 0%;
+            transition: width 0.6s ease;
+            box-shadow: 0 0 20px rgba(17, 147, 212, 0.3);
+        }
+
+        .progress-text {
+            text-align: center;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .section {
+            display: none;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .section.active {
+            display: block;
+            animation: slideUp 0.6s ease;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .concept-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .concept-card::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 4px;
+            background: var(--primary-color);
+        }
+
+        .concept-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .concept-description {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            line-height: 1.7;
+        }
+
+        .example-box {
+            background: rgba(17, 147, 212, 0.1);
+            border: 1px solid rgba(17, 147, 212, 0.2);
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+
+        .example-title {
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .code-example {
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+            font-family: 'Monaco', 'Menlo', monospace;
+            font-size: 0.9rem;
+            overflow-x: auto;
+        }
+
+        .prompt-demo {
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+            font-family: 'Monaco', 'Menlo', monospace;
+            font-size: 0.85rem;
+            position: relative;
+        }
+
+        .prompt-label {
+            background: var(--primary-color);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            position: absolute;
+            top: -10px;
+            left: 1rem;
+        }
+
+        .good-prompt {
+            border-left: 4px solid #4ade80;
+        }
+
+        .bad-prompt {
+            border-left: 4px solid #ef4444;
+        }
+
+        .good-prompt .prompt-label {
+            background: #4ade80;
+        }
+
+        .bad-prompt .prompt-label {
+            background: #ef4444;
+        }
+
+        .fun-fact {
+            background: linear-gradient(135deg, rgba(17, 147, 212, 0.1), rgba(74, 222, 128, 0.05));
+            border: 1px dashed var(--primary-color);
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+            position: relative;
+        }
+
+        .fun-fact::before {
+            content: '💡';
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .comparison-table th {
+            background: var(--bg-tertiary);
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .comparison-table td {
+            color: var(--text-secondary);
+        }
+
+        .quiz-section {
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .quiz-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .question-card {
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .question-card:hover {
+            border-color: var(--primary-color);
+            transform: translateY(-2px);
+        }
+
+        .difficulty-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .easy { background: #10b981; color: white; }
+        .medium { background: #f59e0b; color: white; }
+        .difficult { background: #ef4444; color: white; }
+
+        .question-text {
+            font-weight: 500;
+            margin-bottom: 0.75rem;
+        }
+
+        .answer {
+            background: rgba(17, 147, 212, 0.1);
+            border: 1px solid rgba(17, 147, 212, 0.2);
+            border-radius: 6px;
+            padding: 1rem;
+            margin-top: 0.75rem;
+            display: none;
+        }
+
+        .answer strong {
+            color: var(--primary-color);
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 2rem;
+            gap: 1rem;
+        }
+
+        .nav-btn {
+            background: linear-gradient(135deg, var(--primary-color), #4ade80);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.875rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(17, 147, 212, 0.3);
+        }
+
+        .nav-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .phase-complete {
+            text-align: center;
+            padding: 2rem;
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            margin-top: 2rem;
+        }
+
+        .phase-complete h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        .phase-complete ul {
+            text-align: left;
+            max-width: 500px;
+            margin: 1rem auto;
+            color: var(--text-secondary);
+        }
+
+        .phase-complete li {
+            margin-bottom: 0.5rem;
+        }
+
+        .next-phase-btn {
+            background: linear-gradient(135deg, var(--primary-color), #4ade80);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            margin-top: 1.5rem;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+        }
+
+        .next-phase-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(17, 147, 212, 0.4);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .container.sidebar-open {
+                padding-left: 1rem;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .navigation {
+                flex-direction: column;
+            }
+
+            .nav-btn {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .sidebar {
+                width: 320px;
+                left: -320px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .menu-toggle {
+                display: flex !important;
+            }
+
+            .mobile-back {
+                position: fixed;
+                top: 80px;
+                left: 1rem;
+                z-index: 50;
+                display: flex !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <div class="logo-icon">AI</div>
+                <span>AI Academy</span>
+            </div>
+            <div class="nav-links">
+                <a href="index.html" class="back-to-phase1">
+                    <span class="material-symbols-outlined">arrow_back</span>
+                    Back to Phase 1
+                </a>
+                <button class="menu-toggle" onclick="toggleSidebar()">
+                    <span class="material-symbols-outlined">menu</span>
+                </button>
+            </div>
+            <button class="menu-toggle" onclick="toggleSidebar()" style="display: none;">
+                <span class="material-symbols-outlined">menu</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Mobile back button -->
+    <a href="index.html" class="back-to-phase1 mobile-back" style="display: none;">
+        <span class="material-symbols-outlined">arrow_back</span>
+        Phase 1
+    </a>
+
+    <!-- Sidebar -->
+    <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-title">
+                <span class="material-symbols-outlined">menu_book</span>
+                Course Contents
+            </div>
+            <button class="close-sidebar" onclick="closeSidebar()">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+        </div>
+        <div class="sidebar-content">
+            <div class="sidebar-toc-item active" onclick="goToSection(0)">
+                <div class="sidebar-toc-number">1</div>
+                <div class="sidebar-toc-content">
+                    <h4>Zero-Shot Prompting</h4>
+                    <p>Direct instructions without examples</p>
+                </div>
+            </div>
+            <div class="sidebar-toc-item" onclick="goToSection(1)">
+                <div class="sidebar-toc-number">2</div>
+                <div class="sidebar-toc-content">
+                    <h4>One-Shot & Few-Shot</h4>
+                    <p>Learning through examples</p>
+                </div>
+            </div>
+            <div class="sidebar-toc-item" onclick="goToSection(2)">
+                <div class="sidebar-toc-number">3</div>
+                <div class="sidebar-toc-content">
+                    <h4>Chain-of-Thought</h4>
+                    <p>Step-by-step reasoning</p>
+                </div>
+            </div>
+            <div class="sidebar-toc-item" onclick="goToSection(3)">
+                <div class="sidebar-toc-number">4</div>
+                <div class="sidebar-toc-content">
+                    <h4>Role-Based Prompting</h4>
+                    <p>Setting personas and expertise</p>
+                </div>
+            </div>
+            <div class="sidebar-toc-item" onclick="goToSection(4)">
+                <div class="sidebar-toc-number">5</div>
+                <div class="sidebar-toc-content">
+                    <h4>Constraint-Based</h4>
+                    <p>Controlling output format</p>
+                </div>
+            </div>
+            <div class="sidebar-toc-item" onclick="goToSection(5)">
+                <div class="sidebar-toc-number">6</div>
+                <div class="sidebar-toc-content">
+                    <h4>Context Engineering</h4>
+                    <p>Managing information flow</p>
+                </div>
+            </div>
+            <div class="sidebar-toc-item" onclick="goToSection(6)">
+                <div class="sidebar-toc-number">7</div>
+                <div class="sidebar-toc-content">
+                    <h4>Long Conversations</h4>
+                    <p>Maintaining context over time</p>
+                </div>
+            </div>
+            <div class="sidebar-toc-item" onclick="goToSection(7)">
+                <div class="sidebar-toc-number">8</div>
+                <div class="sidebar-toc-content">
+                    <h4>External Knowledge</h4>
+                    <p>Incorporating outside information</p>
+                </div>
+            </div>
+            <div class="sidebar-toc-item" onclick="goToSection(8)">
+                <div class="sidebar-toc-number">9</div>
+                <div class="sidebar-toc-content">
+                    <h4>Advanced Techniques</h4>
+                    <p>Professional implementation</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container" id="mainContainer">
+        <div class="hero">
+            <div class="phase-badge">
+                <span class="material-symbols-outlined" style="font-size: 18px;">rocket_launch</span>
+                PHASE 2: ADVANCED TRAINING
+            </div>
+            <h1>🎯 Context & Prompt Engineering</h1>
+            <p>Master advanced techniques to communicate effectively with AI and build production-ready systems</p>
+        </div>
+
+        <div class="progress-section">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <div class="progress-text" id="progressText">Section 1 of 9 - Let's Master Advanced AI Communication!</div>
+        </div>
+
+        <!-- Section 1: Zero-Shot Prompting -->
+        <div class="section active" id="section0">
+            <h2>
+                <span class="material-symbols-outlined">flash_on</span>
+                Zero-Shot Prompting
+            </h2>
+            
+            <div class="concept-card">
+                <div class="concept-title">
+                    <span class="material-symbols-outlined">lightbulb</span>
+                    Direct Instruction Mastery
+                </div>
+                <div class="concept-description">
+                    Zero-shot prompting is like asking an expert a direct question without showing any examples first. You rely entirely on the AI's training knowledge to understand and complete the task. It's the simplest form of prompting - just clear instructions and let the AI figure it out based on what it already knows.
+                </div>
+                
+                <div class="example-box">
+                    <div class="example-title">
+                        <span class="material-symbols-outlined">translate</span>
+                        Real-World Example: Language Translation
+                    </div>
+                    <div class="prompt-demo good-prompt">
+                        <div class="prompt-label">Zero-Shot Prompt</div>
+                        Translate the following English sentence to French: "The weather is beautiful today."
+                    </div>
+                    <p><strong>Expected Output:</strong> "Le temps est beau aujourd'hui."</p>
+                    <p>No examples needed - the AI can handle this straightforward translation task using its pre-trained knowledge of both languages.</p>
+                </div>
+
+                <div class="fun-fact">
+                    <h4>⚡ Speed Advantage</h4>
+                    <p>Zero-shot prompting is 5x faster to implement than few-shot approaches and uses minimal tokens, making it perfect for simple tasks and rapid prototyping!</p>
+                </div>
+            </div>
+
+            <div class="concept-card">
+                <div class="concept-title">
+                    <span class="material-symbols-outlined">warning</span>
+                    When Zero-Shot Works Best (and When It Doesn't)
+                </div>
+                <div class="concept-description">
+                    Zero-shot excels at straightforward, well-defined tasks that the AI has likely encountered during training. However, it struggles with ambiguous instructions, specialized formats, or complex nuanced tasks that require specific examples to clarify expectations.
+                </div>
+
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>✅ Excellent For</th>
+                            <th>❌ Struggles With</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Translation tasks</td>
+                            <td>Complex data formatting</td>
+                        </tr>
+                        <tr>
+                            <td>Basic math problems</td>
+                            <td>Nuanced sentiment analysis</td>
+                        </tr>
+                        <tr>
+                            <td>General knowledge questions</td>
+                            <td>Domain-specific jargon</td>
+                        </tr>
+                        <tr>
+                            <td>Simple summarization</td>
+                            <td>Creative style matching</td>
+                        </tr>
+                        <tr>
+                            <td>Clear classification tasks</td>
+                            <td>Edge case handling</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="example-box">
+                    <div class="example-title">
+                        <span class="material-symbols-outlined">sentiment_satisfied</span>
+                        Success vs. Struggle Examples
+                    </div>
+                    <div class="prompt-demo good-prompt">
+                        <div class="prompt-label">Zero-Shot Success</div>
+                        Classify this customer feedback as positive, negative, or neutral: "The product arrived quickly and works perfectly!"
+                    </div>
+                    <p><strong>Result:</strong> ✅ Clearly positive - easy for AI to identify</p>
+                    
+                    <div class="prompt-demo bad-prompt">
+                        <div class="prompt-label">Zero-Shot Struggle</div>
+                        Classify this feedback: "The product is okay, I guess. Could be better, could be worse. It does what it's supposed to do."
+                    </div>
+                    <p><strong>Problem:</strong> ❌ Ambiguous language might be classified as neutral, positive, or negative depending on interpretation</p>
+                </div>
+            </div>
+
+            <div class="quiz-section">
+                <div class="quiz-title">🧩 Test Your Understanding</div>
+                
+                <div class="question-card" onclick="toggleAnswer('q1')">
+                    <span class="difficulty-badge easy">EASY</span>
+                    <div class="question-text">Which of these tasks is BEST suited for zero-shot prompting?</div>
+                    <div class="answer" id="q1">
+                        <strong>Answer:</strong> Tasks like "Translate 'Hello, how are you?' to Spanish" or "What is the capital of Japan?" are perfect for zero-shot prompting. These are straightforward, well-defined tasks that the AI can handle based on its training knowledge without needing examples or complex formatting guidance.
+                    </div>
+                </div>
+
+                <div class="question-card" onclick="toggleAnswer('q2')">
+                    <span class="difficulty-badge medium">MEDIUM</span>
+                    <div class="question-text">A teacher wants to use AI to grade short-answer questions about historical events. Why might zero-shot prompting be insufficient?</div>
+                    <div class="answer" id="q2">
+                        <strong>Answer:</strong> Zero-shot might be insufficient because: 1) Grading requires consistent standards that may not be obvious from a simple instruction, 2) Students might phrase correct answers in unexpected ways, 3) The AI needs to understand the specific rubric and point allocation. Without examples of different answer qualities and their corresponding grades, the AI might be inconsistent or miss correct answers phrased differently than expected.
+                    </div>
+                </div>
+
+                <div class="question-card" onclick="toggleAnswer('q3')">
+                    <span class="difficulty-badge difficult">DIFFICULT</span>
+                    <div class="question-text">A financial services company wants to use zero-shot prompting to categorize customer inquiries. What potential risks should they consider?</div>
+                    <div class="answer" id="q3">
+                        <strong>Answer:</strong> <strong>Risks include:</strong> 1) Misrouting urgent issues causing delays, 2) Inconsistent categorization of edge cases, 3) Inability to handle company-specific terminology, 4) False confidence in incorrect classifications. <strong>Mitigation:</strong> Test with historical data, measure accuracy across inquiry types, implement confidence scoring, create fallback procedures for uncertain cases, and monitor for patterns. They should likely use few-shot prompting with examples of each category instead.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 2: One-Shot & Few-Shot Prompting -->
+        <div class="section" id="section1">
+            <h2>
+                <span class="material-symbols-outlined">school</span>
+                One-Shot & Few-Shot Prompting
+            </h2>
+            
+            <div class="concept-card">
+                <div class="concept-title">
+                    <span class="material-symbols-outlined">example</span>
+                    Learning Through Examples
+                </div>
+                <div class="concept-description">
+                    One-shot and few-shot prompting work like showing someone how to do a task before asking them to do it themselves. One-shot provides a single example, while few-shot provides multiple examples. This helps the AI understand not just what you want, but exactly how you want it formatted and approached.
+                </div>
+                
+                <div class="example-box">
+                    <div class="example-title">
+                        <span class="material-symbols-outlined">email</span>
+                        Real-World Example: Email Classification
+                    </div>
+                    
+                    <div class="prompt-demo good-prompt">
+                        <div class="prompt-label">One-Shot Prompt</div>
+                        Classify emails as "urgent", "important", or "routine" based on content and tone.
+
+Example:
+Email: "URGENT: Server down, customers can't access website, need immediate attention!"
+Classification: urgent
+
+Now classify this email:
+Email: "Hi, could you update my billing address when you get a chance? Thanks!"
+Classification:
+                    </div>
+
+                    <div class="prompt-demo good-prompt">
+                        <div class="prompt-label">Few-Shot Prompt</div>
+                        Classify emails as "urgent", "important", or "routine":
+
+Email: "URGENT: Security breach detected, immediate action required!"
+Classification: urgent
+
+Email: "Meeting scheduled for next Tuesday, please confirm attendance"
+Classification: important
+
+Email: "Here's the monthly newsletter with company updates"
+Classification: routine
+
+Email: "Project deadline is tomorrow, need final approval ASAP"
+Classification:
+                    </div>
+                </div>
+
+                <div class="fun-fact">
+                    <h4>📈 Accuracy Boost</h4>
+                    <p>Few-shot prompting can improve AI accuracy by 15-30% compared to zero-shot, especially for tasks requiring specific formatting or nuanced judgment!</p>
+                </div>
+            </div>
+
+            <div class="concept-card">
+                <div class="concept-title">
+                    <span class="material-symbols-outlined">psychology</span>
+                    The Science of In-Context Learning
+                </div>
+                <div class="concept-description">
+                    Few-shot prompting leverages the AI's "in-context learning" ability - the model learns from examples within the prompt without any additional training. The quality and diversity of your examples directly impacts results. Your examples are teaching the AI the "rules" of the task.
+                </div>
+
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>✅ Best Practices</th>
+                            <th>❌ Common Mistakes</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Include diverse, representative examples</td>
+                            <td>Using only similar, repetitive examples</td>
+                        </tr>
+                        <tr>
+                            <td>Show clear input-output patterns</td>
+                            <td>Using vague or ambiguous examples</td>
+                        </tr>
+                        <tr>
+                            <td>Include edge cases and tricky scenarios</td>
+                            <td>Only showing easy, obvious cases</td>
+                        </tr>
+                        <tr>
+                            <td>Use consistent formatting across examples</td>
+                            <td>Mixing different formats randomly</td>
+                        </tr>
+                        <tr>
+                            <td>Quality over quantity (2-5 good examples)</td>
+                            <td>Too many examples using up token space</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="example-box">
+                    <div class="example-title">
+                        <span class="material-symbols-outlined">shopping_cart</span>
+                        Real-World Example: Product Review Sentiment
+                    </div>
+                    <div class="prompt-demo good-prompt">
+                        <div class="prompt-label">Well-Chosen Examples</div>
+                        Analyze product review sentiment as positive, negative, or mixed:
+
+Review: "Amazing quality! Fast shipping, exactly as described. Highly recommend!"
+Sentiment: positive
+
+Review: "Product broke after 2 days. Terrible customer service. Waste of money."
+Sentiment: negative
+
+Review: "Good product overall, but shipping was slow and packaging was damaged."
+Sentiment: mixed
+
+Review: "It's okay I guess. Does what it's supposed to do but nothing special."
+Sentiment:
+                    </div>
+                    <p>These examples show clear positive, negative, and the tricky "mixed" category that might confuse zero-shot prompting.</p>
+                </div>
+            </div>
+
+            <div class="quiz-section">
+                <div class="quiz-title">🧩 Test Your Understanding</div>
+                
+                <div class="question-card" onclick="toggleAnswer('q4')">
+                    <span class="difficulty-badge easy">EASY</span>
+                    <div class="question-text">When would you choose one-shot prompting over few-shot prompting?</div>
+                    <div class="answer" id="q4">
+                        <strong>Answer:</strong> Choose one-shot when: 1) The task is relatively simple and one good example can clarify the format, 2) You want to save tokens/space in your prompt, 3) You're testing whether a single example is sufficient before adding more, 4) The pattern is straightforward and unlikely to have many edge cases. One-shot is perfect for tasks like "format this data as JSON" where a single clear example shows the desired structure.
+                    </div>
+                </div>
+
+                <div class="question-card" onclick="toggleAnswer('q5')">
+                    <span class="difficulty-badge medium">MEDIUM</span>
+                    <div class="question-text">A content creator wants AI to write social media captions in their specific brand voice. How should they design effective few-shot examples?</div>
+                    <div class="answer" id="q5">
+                        <strong>Answer:</strong> They should create 3-5 examples showcasing: 1) <strong>Different content types:</strong> product posts, behind-the-scenes, educational content, 2) <strong>Consistent voice elements:</strong> tone, humor level, hashtag style, emoji use, 3) <strong>Various lengths:</strong> short punchy captions and longer storytelling ones, 4) <strong>Brand-specific language:</strong> terminology, catchphrases, values, 5) <strong>Audience engagement:</strong> questions, calls-to-action. Each example should include the post context and resulting caption, showing the AI how to transform different inputs into their specific brand voice.
+                    </div>
+                </div>
+
+                <div class="question-card" onclick="toggleAnswer('q6')">
+                    <span class="difficulty-badge difficult">DIFFICULT</span>
+                    <div class="question-text">A medical research team wants to use few-shot prompting to categorize patient symptoms. What are the critical considerations?</div>
+                    <div class="answer" id="q6">
+                        <strong>Answer:</strong> <strong>Critical considerations:</strong> 1) <strong>Medical accuracy:</strong> Examples must be clinically reviewed by licensed physicians, 2) <strong>Diverse presentation:</strong> Include age/gender variations and atypical presentations, 3) <strong>Appropriate scope:</strong> Focus on broad categories, not specific diagnoses, 4) <strong>Clear limitations:</strong> Show when to recommend "immediate medical attention," 5) <strong>Bias prevention:</strong> Include diverse demographics. <strong>Safeguards:</strong> Always require human physician review, include disclaimers, log interactions, implement confidence scoring, have fail-safes for critical symptoms, and clear escalation protocols. AI should categorize for research efficiency, never replace clinical judgment.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 3: Chain-of-Thought Prompting -->
+        <div class="section" id="section2">
+            <h2>
+                <span class="material-symbols-outlined">psychology</span>
+                Chain-of-Thought Prompting
+            </h2>
+            
+            <div class="concept-card">
+                <div class="concept-title">
+                    <span class="material-symbols-outlined">auto_awesome</span>
+                    Thinking Step-by-Step
+                </div>
+                <div class="concept-description">
+                    Chain-of-Thought (CoT) prompting is like asking someone to "show their work" on a math problem. Instead of jumping straight to an answer, you encourage the AI to break down its reasoning into clear, logical steps. This dramatically improves accuracy on complex problems and makes the AI's reasoning transparent and verifiable.
+                </div>
+                
+                <div class="example-box">
+                    <div class="example-title">
+                        <span class="material-symbols-outlined">calculate</span>
+                        Real-World Example: Math Problem Solving
+                    </div>
+                    
+                    <div class="prompt-demo bad-prompt">
+                        <div class="prompt-label">Without CoT</div>
+                        Sarah has 15 apples. She gives 1/3 to her sister and 1/5 of the remaining apples to her friend. How many apples does Sarah have left?
+                        
+                        <em>Common AI Response: "Sarah has 8 apples left." (Potentially incorrect reasoning!)</em>
+                    </div>
+
+                    <div class="prompt-demo good-prompt">
+                        <div class="prompt-label">With CoT</div>
+                        Sarah has 15 apples. She gives 1/3 to her sister and 1/5 of the remaining apples to her friend. How many apples does Sarah have left?
+
+Let's solve this step by step:
+
+                        <em>AI Response:</em>
+                        Step 1: Sarah starts with 15 apples
+                        Step 2: She gives 1/3 to her sister = 15 × 1/3 = 5 apples
+                        Step 3: Remaining after giving to sister = 15 - 5 = 10 apples
+                        Step 4: She gives 1/5 of remaining to friend = 10 × 1/5 = 2 apples
+                        Step 5: Final amount = 10 - 2 = 8 apples
+                        
+                        Therefore, Sarah has 8 apples left.
+                    </div>
+                </div>
+
+                <div class="fun-fact">
+                    <h4>🎯 Performance Impact</h4>
+                    <p>Chain-of-thought prompting can improve accuracy on reasoning tasks by 30-50%! It's especially powerful for math, logic puzzles, and any multi-step problem-solving.</p>
+                </div>
+            </div>
+
+            <div class="concept-card">
+                <div class="concept-title">
+                    <span class="material-symbols-outlined">compare_arrows</span>
+                    Zero-Shot vs Few-Shot CoT
+                </div>
+                <div class="concept-description">
+                    You can trigger chain-of-thought reasoning in two ways: by simply asking the AI to "think step by step" (zero-shot CoT), or by providing examples that demonstrate step-by-step reasoning (few-shot CoT). Both approaches significantly improve reasoning quality.
+                </div>
+
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Zero-Shot CoT</th>
+                            <th>Few-Shot CoT</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Quick implementation</td>
+                            <td>More consistent reasoning structure</td>
+                        </tr>
+                        <tr>
+                            <td>Works well for standard logic problems</td>
+                            <td>Better for domain-specific reasoning</td>
+                        </tr>
+                        <tr>
+                            <td>Uses fewer tokens</td>
+                            <td>Teaches specific reasoning methodology</td>
+                        </tr>
+                        <tr>
+                            <td>Good for general reasoning</td>
+                            <td>Ideal for specialized problem-solving</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="example-box">
+                    <div class="example-title">
+                        <span class="material-symbols-outlined">business</span>
+                        Real-World Example: Business Analysis
+                    </div>
+                    
+                    <div class="prompt-demo good-prompt">
+                        <div class="prompt-label">Zero-Shot CoT</div>
+                        Our company's revenue dropped 15% this quarter compared to last quarter. Our main competitor launched a new product in month 2, and we had a 2-week supply chain disruption in month 3. Analyze what likely caused our revenue drop. Let's think through this step by step.
+                    </div>
+
+                    <div class="prompt-demo good-prompt">
+                        <div class="prompt-label">Few-Shot CoT</div>
+                        Analyze business problems by breaking them into steps:
+
+Example:
+Problem: Sales team missed targets by 20%
+Analysis:
+Step 1: Identify the timeline - when did performance start declining?
+Step 2: Examine external factors - market conditions, competition
+Step 3: Review internal factors - team changes, product issues, pricing
+Step 4: Correlate timing with potential causes
+Step 5: Determine most likely primary cause and contributing factors
+
+Now analyze this problem:
+Our company's revenue dropped 15% this quarter...
+                    </div>
+                </div>
+            </div>
+
+            <div class="quiz-section">
+                <div class="quiz-title">🧩 Test Your Understanding</div>
+                
+                <div class="question-card" onclick="toggleAnswer('q7')">
+                    <span class="difficulty-badge easy">EASY</span>
+                    <div class="question-text">What simple phrase can you add to almost any prompt to trigger chain-of-thought reasoning?</div>
+                    <div class="answer" id="q7">
+                        <strong>Answer:</strong> "Let's think step by step" or "Let's work through this step by step" are the most common and effective phrases. Other variations include "Let's solve this systematically," "Think through this carefully," or "Show your reasoning process." These simple additions can dramatically improve the quality of reasoning on complex problems.
+                    </div>
+                </div>
+
+                <div class="question-card" onclick="toggleAnswer('q8')">
+                    <span class="difficulty-badge medium">MEDIUM</span>
+                    <div class="question-text">A project manager wants to use AI to analyze why projects consistently run over budget. How would they design a chain-of-thought prompt?</div>
+                    <div class="answer" id="q8">
+                        <strong>Answer:</strong> They should create a few-shot CoT prompt demonstrating systematic analysis:
+
+"Analyze project budget overruns using this approach:
+
+Example:
+Project: Website redesign, 40% over budget
+Step 1: Identify when overruns occurred (planning, development, testing)
+Step 2: Categorize overrun types (scope changes, resource costs, timeline extensions)
+Step 3: Examine root causes (unclear requirements, skill gaps, dependencies)
+Step 4: Assess preventability (avoidable vs unavoidable factors)
+Step 5: Recommend specific process improvements
+
+Now analyze this project: [details]"
+
+This ensures consistent, thorough analysis leading to actionable insights.
+                    </div>
+                </div>
+
+                <div class="question-card" onclick="toggleAnswer('q9')">
+                    <span class="difficulty-badge difficult">DIFFICULT</span>
+                    <div class="question-text">A financial advisor wants to use CoT prompting to analyze complex investment scenarios. What are the benefits and risks?</div>
+                    <div class="answer" id="q9">
+                        <strong>Answer:</strong> <strong>Benefits:</strong> 1) Transparent reasoning clients can follow and verify, 2) Systematic analysis covering multiple factors, 3) Reduced risk of overlooking considerations, 4) Consistent analytical framework. <strong>Risks:</strong> 1) AI might use incorrect financial assumptions, 2) Overconfidence could reduce human oversight, 3) Complex scenarios might exceed AI reasoning ability, 4) Regulatory compliance if AI advice isn't supervised. <strong>Best practices:</strong> Define clear analytical steps, require data source citations, include uncertainty acknowledgments, separate analysis from recommendations, identify scenarios needing human expertise, require confidence levels, always include professional advice disclaimers.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 4: Role-Based Prompting -->
+        <div class="section" id="section3">
+            <h2>
+                <span class="material-symbols-outlined">theater_comedy</span>
+                Role-Based Prompting
+            </h2>
+            
+            <div class="concept-card">
+                <div class="concept-title">
+                    <span class="material-symbols-outlined">person</span>
+                    Setting the AI's Persona
+                </div>
+                <div class="concept-description">
+                    Role-based prompting is like giving the AI a character to play. By telling the AI "You are a [specific role]," you guide not just what it knows, but how it communicates, what perspective it takes, and what kind of expertise it draws upon. This technique dramatically improves both the quality and appropriateness of responses.
+                </div>
+                
+                <div class="example-box">
+                    <div class="example-title">
+                        <span class="material-symbols-outlined">school</span>
+                        Real-World Example: Educational Explanation
+                    </div>
+                    
+                    <div class="prompt-demo bad-prompt">
+                        <div class="prompt-label">Without Role</div>
+                        Explain photosynthesis.
+                        
+                        <em>Generic response: Technical definition with complex terminology</em>
+                    </div>
+
+                    <div class="prompt-demo good-prompt">
+                        <div class="prompt-label">Elementary Teacher Role</div>
+                        You are an elementary school teacher explaining science to 8-year-olds. Explain photosynthesis in a way that's fun and easy to understand, using simple words and comparisons to things kids know.
+                        
+                        <em>Response: "Think of plants like tiny food factories! They use sunlight, water, and air to make their own food, just like how a bakery uses ingredients to make bread..."</em>
+                    </div>
+
+                    <div class="prompt-demo good-prompt">
+                        <div class="prompt-label">Research Scientist Role</div>
+                        You are a plant biology researcher writing for a scientific journal. Explain the current understanding of photosynthetic mechanisms, including recent discoveries about light-harvesting complexes.
+                        
+                        <em>Response: "Recent advances in spectroscopic analysis have revealed quantum efficiency mechanisms in chlorophyll complexes..."</em>
+                    </div>
+                </div>
+
+                <div class="fun-fact">
+                    <h4>🎭 Versatility Power</h4>
+                    <p>The same AI can be a patient tutor, assertive manager, creative storyteller, or analytical researcher just by changing the role! This makes it incredibly versatile for different business needs.</p>
+                </div>
+            </div>
+
+            <div class="concept-card">
+                <div class="concept-title">
+                    <span class="material-symbols-outlined">construction</span>
+                    Crafting Effective Roles
+                </div>
+                <div class="concept-description">
+                    Great role prompts are specific and include context about expertise, communication style, and perspective. Instead of just "You are a teacher," try "You are an experienced high school chemistry teacher who excels at making complex concepts accessible through real-world examples."
+                </div>
+
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>✅ Effective Role</th>
+                            <th>❌ Generic Role</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>"You are a customer service manager with 10 years experience in tech support, known for turning frustrated customers into advocates"</td>
+                            <td>"You are a customer service representative"</td>
+                        </tr>
+                        <tr>
+                            <td>"You are a financial advisor specializing in retirement planning for middle-class families, expert in 401k optimization"</td>
+                            <td>"You are a financial advisor"</td>
+                        </tr>
+                        <tr>
+                            <td>"You are a creative copywriter for sustainable brands, expert at balancing environmental messaging with commercial appeal"</td>
+                            <td>"You are a copywriter"</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="example-box">
+                    <div class="example-title">
+                        <span class="material-symbols-outlined">business</span>
+                        Real-World Example: Business Communications
+                    </div>
+                    <div class="prompt-demo good-prompt">
+                        <div class="prompt-label">Executive Assistant Role</div>
+                        You are an experienced executive assistant who excels at professional communication and managing sensitive situations diplomatically. Draft an email declining a meeting request while maintaining positive relationships.
+                        
+                        Meeting request: "Can we meet tomorrow at 2 PM to discuss the Johnson project timeline?"
+                    </div>
+                    
+                    <div class="prompt-demo good-prompt">
+                        <div class="prompt-label">Project Manager Role</div>
+                        You are a project manager known for clear, decisive communication and proactive problem-solving. The same meeting request needs to be addressed, but with focus on alternative solutions and next steps.
+                    </div>
+                    
+                    <p>Notice how the same task produces different approaches: diplomatic vs. solution-focused, based on the role's characteristics.</p>
+                </div>
+            </div>
+
+            <div class="quiz-section">
+                <div class="quiz-title">🧩 Test Your Understanding</div>
+                
+                <div class="question-card" onclick="toggleAnswer('q10')">
+                    <span class="difficulty-badge easy">EASY</span>
+                    <div class="question-text">How does role-based prompting change the AI's response beyond just the information it provides?</div>
+                    <div class="answer" id="q10">
+                        <strong>Answer:</strong> Role-based prompting changes: 1) <strong>Communication style:</strong> formal vs casual, technical vs simple language, 2) <strong>Perspective:</strong> what aspects are emphasized, 3) <strong>Tone:</strong> authoritative, empathetic, enthusiastic, cautious, 4) <strong>Structure:</strong> academic paper vs bullet points, 5) <strong>Audience assumptions:</strong> expected background knowledge, 6) <strong>Problem-solving approach:</strong> analytical, creative, systematic, or intuitive. The same facts become completely different communications based on who's "delivering" them.
+                    </div>
+                </div>
+
+                <div class="question-card" onclick="toggleAnswer('q11')">
+                    <span class="difficulty-badge medium">MEDIUM</span>
+                    <div class="question-text">A tech startup wants AI to help write job descriptions that attract diverse, qualified candidates. How should they craft a role-based prompt?</div>
+                    <div class="answer" id="q11">
+                        <strong>Answer:</strong> They should create a specific, multi-faceted role: "You are an inclusive talent acquisition specialist with expertise in writing job descriptions that attract diverse candidates while clearly communicating requirements. You understand unconscious bias in job postings and know how to use inclusive language, focus on essential skills rather than 'nice-to-haves,' and create welcoming descriptions that don't inadvertently exclude qualified candidates from underrepresented groups."
+
+Include context: "Our company values diversity and wants to attract candidates from all backgrounds. Focus on what candidates will accomplish and learn, not just what they must already know. Use gender-neutral language and avoid corporate jargon."
+                    </div>
+                </div>
+
+                <div class="question-card" onclick="toggleAnswer('q12')">
+                    <span class="difficulty-badge difficult">DIFFICULT</span>
+                    <div class="question-text">A healthcare system wants AI to help doctors communicate complex medical information to patients with varying health literacy levels. How should they design role-based prompts?</div>
+                    <div class="answer" id="q12">
+                        <strong>Answer:</strong> They need layered, adaptive role design:
+
+<strong>Base role:</strong> "You are a compassionate physician expert at patient education, with deep understanding of health literacy challenges and cultural sensitivity in medical communication."
+
+<strong>Adaptive elements:</strong>
+- <strong>Literacy-aware:</strong> "Adjust language complexity based on patient's education level, always checking understanding"
+- <strong>Culturally competent:</strong> "Consider cultural factors influencing health beliefs"
+- <strong>Empathy-focused:</strong> "Acknowledge patient emotions, especially around scary diagnoses"
+
+<strong>Safety constraints:</strong> Encourage questions, include when to contact providers, never replace physician consultation, acknowledge limitations.
+
+<strong>Context requirements:</strong> Include patient demographics, diagnosis complexity, and emotional state to guide appropriate communication style.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 5: Constraint-Based Prompting -->
+        <div class="section" id="section4">
+            <h2>
+                <span class="material-symbols-outlined">rule</span>
+                Constraint-Based Prompting
+            </h2>
+            
+            <div class="concept-card">
+                <div class="concept-title">
+                    <span class="material-symbols-outlined">tune</span>
+                    Setting Precise Boundaries
+                </div>
+                <div class="concept-description">
+                    Constraint-based prompting is like giving someone a detailed recipe with specific measurements instead of just saying "make something delicious." You set explicit rules about length, format, tone, content, and style to ensure the AI's output meets your exact requirements. This technique is essential for professional applications where consistency and compliance matter.
+                </div>
+                
+                <div class="example-box">
+                    <div class="example-title">
+                        <span class="material-symbols-outlined">assessment</span>
+                        Real-World Example: Business Report Generation
+                    </div>
+                    
+                    <div class="prompt-demo bad-prompt">
+                        <div class="prompt-label">Without Constraints</div>
+                        Write a report about our Q3 sales performance.
+                        
+                        <em>Result: Vague, inconsistent format, unknown length, might miss key metrics</em>
+                    </div>
+
+                    <div class="prompt-demo good-prompt">
+                        <div class="prompt-label">With Constraints</div>
+                        Write a Q3 sales performance report with these requirements:
+
+**Format:** Executive summary (150 words max) + 4 sections with headers
+**Length:** Maximum 800 words total
+**Tone:** Professional, data-driven, optimistic but realistic
+**Required content:** Revenue numbers, growth percentages, top performing products, challenges faced
+**Structure:** Each section must include specific metrics and year-over-year comparisons
+**Forbidden:** No speculation beyond provided data, no personal opinions
+**Audience:** C-suite executives who need quick, actionable insights
+                    </div>
+                </div>
+
+                <div class="fun-fact">
+                    <h4>📊 Precision Power</h4>
+                    <p>Studies show constraint-based prompting improves output compliance by 70-85% compared to open-ended prompts. It's the difference between getting "something close" and getting exactly what you need!</p>
+                </div>
+            </div>
+
+            <div class="concept-card">
+                <div class="concept-title">
+                    <span class="material-symbols-outlined">category</span>
+                    Types of Constraints
+                </div>
+                <div class="concept-description">
+                    Constraints come in many forms, each serving different purposes. The key is choosing the right combination that guides the AI without being so restrictive that the output becomes unnatural or stilted.
+                </div>
+
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Constraint Type</th>
+                            <th>Examples</th>
+                            <th>Use Cases</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Length</strong></td>
+                            <td>"Exactly 50 words", "3-5 sentences", "Under 2 pages"</td>
+                            <td>Social media, summaries, presentations</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Format</strong></td>
+                            <td>"JSON format", "Bullet points only", "Table with 3 columns"</td>
+                            <td>Data processing, reports, APIs</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Tone</strong></td>
+                            <td>"Professional but friendly", "Urgent but not alarming"</td>
+                            <td>Communications, marketing, support</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Content</strong></td>
+                            <td>"Must include ROI", "No technical jargon", "Include 3 examples"</td>
+                            <td>Business documents, education</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Style</strong></td>
+                            <td>"AP Style", "Conversational", "Academic citation format"</td>
+                            <td>Publishing, marketing, research</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="example-box">
+                    <div class="example-title">
+                        <span class="material-symbols-outlined">shopping_cart</span>
+                        Real-World Example: E-commerce Product Descriptions
+                    </div>
+                    <div class="prompt-demo good-prompt">
+                        <div class="prompt-label">Multi-Constraint Prompt</div>
+                        Write a product description for wireless headphones with these constraints:
+
+**Length:** Exactly 75-100 words
+**Format:** 2 paragraphs - features paragraph, then benefits paragraph
+**Tone:** Enthusiastic but trustworthy, not overly salesy
+**Required elements:** Battery life, sound quality, comfort, price point
+**Target audience:** Busy professionals who commute
+**SEO requirements:** Include "wireless headphones" and "noise canceling" naturally
+**Forbidden words:** "Revolutionary", "game-changing", "incredible"
+**Call-to-action:** End with subtle purchase encouragement
+                    </div>
+                    
+                    <p>These constraints ensure every product description follows brand guidelines, meets technical requirements, and appeals to the target customer while avoiding overused marketing language.</p>
+                </div>
+            </div>
+
+            <div class="quiz-section">
+                <div class="quiz-title">🧩 Test Your Understanding</div>
+                
+                <div class="question-card" onclick="toggleAnswer('q13')">
+                    <span class="difficulty-badge easy">EASY</span>
+                    <div class="question-text">What's the main benefit of using constraint-based prompting for business applications?</div>
+                    <div class="answer" id="q13">
+                        <strong>Answer:</strong> The main benefit is <strong>consistency and predictability</strong>. Instead of getting different formats, lengths, and styles each time, constraints ensure every output meets your specific requirements. This is crucial for businesses that need standardized reports, compliant communications, or consistent brand voice across all AI-generated content. It transforms AI from a creative wild card into a reliable business tool.
+                    </div>
+                </div>
+
+                <div class="question-card" onclick="toggleAnswer('q14')">
+                    <span class="difficulty-badge medium">MEDIUM</span>
+                    <div class="question-text">A legal firm wants AI to help draft client email responses that are professional, compliant, and appropriately cautious. What specific constraints should they implement?</div>
+                    <div class="answer" id="q14">
+                        <strong>Answer:</strong> Essential constraints should include:
+
+<strong>Legal compliance:</strong>
+- "Include disclaimer: 'This does not constitute legal advice'"
+- "Never promise specific outcomes or guarantees"
+- "Always recommend consultation for case-specific guidance"
+
+<strong>Communication standards:</strong>
+- "Professional, respectful tone throughout"
+- "Maximum 300 words for initial responses"
+- "Include specific next steps or required client actions"
+
+<strong>Risk management:</strong>
+- "Do not reference specific legal precedents without verification"
+- "Avoid speculation about case outcomes"
+- "Use 'may' instead of 'will' when discussing potential results"
+- "Include firm letterhead information requirements"
+                    </div>
+                </div>
+
+                <div class="question-card" onclick="toggleAnswer('q15')">
+                    <span class="difficulty-badge difficult">DIFFICULT</span>
+                    <div class="question-text">A pharmaceutical company needs AI for regulatory submission documents that must meet strict FDA requirements. How should they balance comprehensive constraints with maintaining readability?</div>
+                    <div class="answer" id="q15">
+                        <strong>Answer:</strong> They should implement a <strong>hierarchical constraint system</strong>:
+
+<strong>Tier 1 (Non-negotiable FDA requirements):</strong>
+- Mandatory sections per FDA guidance
+- Required data elements and statistical presentations
+- Specific formatting (fonts, margins, page numbering)
+- Regulatory language requirements
+
+<strong>Tier 2 (Quality & Consistency):</strong>
+- Professional scientific tone, third person
+- Consistent terminology throughout
+- Clear logical flow between sections
+
+<strong>Tier 3 (Readability Enhancement):</strong>
+- Use active voice where regulations permit
+- Vary sentence length for readability
+- Include transitional phrases between complex sections
+
+<strong>Balancing strategies:</strong> Create constraint templates for different document types, allow AI flexibility within sections while maintaining required structure, use staged prompting, include "may deviate if scientifically necessary" clauses, implement human review checkpoints, and regular validation against successful FDA submissions.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 6: Context Engineering Fundamentals -->
+        <div class="section" id="section5">
+            <h2>
+                <span class="material-symbols-outlined">architecture</span>
+                Context Engineering Fundamentals
+            </h2>
+            
+            <div class="concept-card">
+                <div class="concept-title">
+                    <span class="material-symbols-outlined">layers</span>
+                    Beyond the Prompt
+                </div>
+                <div class="concept-description">
+                    Context engineering is the architecture behind great AI interactions. While prompt engineering focuses on crafting individual instructions, context engineering designs the entire information environment the AI operates in. It's about managing what the AI "knows," remembers, and has access to across multiple interactions and complex tasks.
+                </div>
+                
+                <div class="example-box">
+                    <div class="example-title">
+                        <span class="material-symbols-outlined">support_agent</span>
+                        Real-World Example: Customer Support System
+                    </div>
+                    <div class="concept-description">
+                        Imagine a customer support AI that needs to help with account issues:
+                    </div>
+                    
+                    <div class="code-example">
+<strong>Context Components:</strong>
+
+<span style="color: #4ade80;">// System Role & Behavior</span>
+System: You are a helpful customer support agent for TechCorp, known for being patient, knowledgeable, and solution-focused.
+
+<span style="color: #4ade80;">// Customer Context</span>
+Customer Profile: John Smith, Premium customer since 2019, Account #12345
+Recent Orders: Laptop repair service (pending), Software license renewal
+Previous Issues: Billing inquiry resolved 2 weeks ago
+
+<span style="color: #4ade80;">// Knowledge Base Context</span>
+Available Information: 
+- Product manuals and troubleshooting guides
+- Current promotions and policies
+- Known system issues and their status
+
+<span style="color: #4ade80;">// Conversation History</span>
+Previous 3 interactions: [Summarized key points]
+Current Session: Customer asking about repair status
+
+<span style="color: #4ade80;">// Tools Available</span>
+- Order tracking system
+- Billing database access
+- Escalation procedures
+                    </div>
+                    <p>This rich context allows the AI to provide personalized, informed assistance that feels natural and helpful.</p>
+                </div>
+
+                <div class="fun-fact">
+                    <h4>🧠 Memory vs Context</h4>
+                    <p>Unlike humans, AI doesn't have persistent memory. Context engineering creates the illusion of memory by strategically managing what information gets included in each interaction!</p>
+                </div>
+            </div>
+
+            <div class="concept-card">
+                <div class="concept-title">
+                    <span class="material-symbols-outlined">memory</span>
+                    The Context Window Challenge
+                </div>
+                <div class="concept-description">
+                    AI models have limited "working memory" called a context window - typically 4,000 to 200,000+ tokens. Everything the AI needs to know must fit in this space. Context engineering is about making strategic decisions: What information is essential? What can be summarized? What should be retrieved dynamically?
+                </div>
+
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Strategy</th>
+                            <th>Best For</th>
+                            <th>Pros</th>
+                            <th>Cons</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Full Context</strong></td>
+                            <td>Short interactions</td>
+                            <td>Complete information available</td>
+                            <td>Quickly hits token limits</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Sliding Window</strong></td>
+                            <td>Ongoing conversations</td>
+                            <td>Always includes recent context</td>
+                            <td>Can lose important early information</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Summarization</strong></td>
+                            <td>Long interactions</td>
+                            <td>Preserves key points efficiently</td>
+                            <td>May lose nuanced details</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Dynamic Retrieval</strong></td>
+                            <td>Knowledge-heavy tasks</td>
+                            <td>Access to vast information</td>
+                            <td>Complex to implement</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="example-box">
+                    <div class="example-title">
+                        <span class="material-symbols-outlined">school</span>
+                        Real-World Example: Educational Tutoring System
+                    </div>
+                    <div class="prompt-demo good-prompt">
+                        <div class="prompt-label">Structured Context Design</div>
+                        **Student Profile:** Sarah, 10th grade, struggles with algebra, visual learner, prefers step-by-step explanations
+
+**Learning Session Context:**
+- Current topic: Linear equations
+- Previous mastery: Basic arithmetic (strong), fractions (weak)
+- Today's goal: Solve 2-variable equations
+- Learning style adaptations: Use graphs and real-world examples
+
+**Conversation History:** [Summarized key points from last 3 sessions]
+
+**Available Resources:** Algebra textbook chapters 4-6, practice problem sets, graphing tools
+
+**Current Problem:** Student is confused about substitution method
+                    </div>
+                    <p>This context structure ensures the AI can provide personalized instruction that builds on the student's strengths and addresses their specific learning needs.</p>
+                </div>
+            </div>
+
+            <div class="quiz-section">
+                <div class="quiz-title">🧩 Test Your Understanding</div>
+                
+                <div class="question-card" onclick="toggleAnswer('q16')">
+                    <span class="difficulty-badge easy">EASY</span>
+                    <div class="question-text">What's the key difference between prompt engineering and context engineering?</div>
+                    <div class="answer" id="q16">
+                        <strong>Answer:</strong> <strong>Prompt engineering</strong> focuses on crafting the specific instruction or question for a single interaction - "what to say to the AI right now." <strong>Context engineering</strong> focuses on designing the entire information environment the AI operates in - "what should the AI know and remember across multiple interactions." Think of prompt engineering as writing a good email, while context engineering is like setting up the recipient's entire office with the right files, tools, and background information.
+                    </div>
+                </div>
+
+                <div class="question-card" onclick="toggleAnswer('q17')">
+                    <span class="difficulty-badge medium">MEDIUM</span>
+                    <div class="question-text">A project management company wants their AI assistant to help track multiple client projects simultaneously. How should they structure their context engineering approach?</div>
+                    <div class="answer" id="q17">
+                        <strong>Answer:</strong> They should implement a <strong>multi-layered context architecture</strong>:
+
+<strong>Global Context (always present):</strong>
+- Company policies and communication standards
+- AI's role as project management assistant
+- Standard project management methodologies used
+
+<strong>Project-Specific Context (dynamically loaded):</strong>
+- Project overview, timeline, and current status
+- Stakeholder list with communication preferences
+- Recent updates and upcoming milestones
+- Risk factors and blockers
+
+<strong>Session Context (conversation-specific):</strong>
+- Which project(s) the current conversation focuses on
+- Specific questions or tasks being discussed
+- Recent decisions made or actions taken
+
+<strong>Dynamic Retrieval System:</strong>
+- Pull relevant project data based on conversation topic
+- Access historical project patterns for similar situations
+- Integrate with project management tools for real-time status
+                    </div>
+                </div>
+
+                <div class="question-card" onclick="toggleAnswer('q18')">
+                    <span class="difficulty-badge difficult">DIFFICULT</span>
+                    <div class="question-text">A healthcare organization wants an AI system that helps doctors with patient consultations. What are the critical context engineering considerations for effectiveness and safety?</div>
+                    <div class="answer" id="q18">
+                        <strong>Answer:</strong> This requires extremely careful context engineering with multiple safety layers:
+
+<strong>Patient Context (Highly Secure):</strong>
+- Current patient demographics, medical history, allergies, medications
+- Recent test results, vital signs, symptoms
+- Insurance/treatment limitations and patient preferences
+- Family medical history and genetic risk factors
+
+<strong>Medical Knowledge Context:</strong>
+- Current evidence-based treatment guidelines
+- Drug interaction databases and contraindications
+- Differential diagnosis frameworks for presenting symptoms
+- Recent medical literature relevant to patient's conditions
+
+<strong>Safety-Critical Context:</strong>
+- Medical emergency protocols and red flag symptoms
+- Legal and ethical guidelines for patient care
+- Clear AI limitations and when human expertise is required
+- Audit trail requirements for AI recommendations
+
+<strong>Critical Safeguards:</strong> All AI suggestions marked "FOR PHYSICIAN REVIEW ONLY," confidence levels for all recommendations, mandatory human physician approval, real-time medical database integration, patient consent for AI assistance, fail-safes for critical values, complete audit logging. The context engineering must enhance physician decision-making without replacing clinical judgment.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 7: Managing Long Conversations -->
+        <div class="section" id="section6">
+            <h2>
+                <span class="material-symbols-outlined">forum</span>
+                Managing Long Conversations
+            </h2>
+            
+            <div class="concept-card">
+                <div class="concept-title">
+                    <span class="material-symbols-outlined">refresh</span>
+                    The Memory Challenge
+                </div>
+                <div class="concept-description">
+                    AI models are stateless - they don't remember previous conversations unless you explicitly provide that information. For long, multi-turn conversations, you need strategies to maintain context, preserve important information, and prevent the AI from "forgetting" crucial details as conversations grow beyond the context window limits.
+                </div>
+                
+                <div class="example-box">
+                    <div class="example-title">
+                        <span class="material-symbols-outlined">business</span>
+                        Real-World Example: Business Strategy Session
+                    </div>
+                    <div class="concept-description">
+                        Imagine a 2-hour strategy session where an AI helps plan a product launch:
+                    </div>
+                    
+                    <div class="code-example">
+<strong>Turn 1:</strong> Define target market (tech-savvy millennials, urban areas)
+<strong>Turn 15:</strong> Discuss pricing strategy ($299 premium positioning)
+<strong>Turn 30:</strong> Plan marketing channels (social media, influencers)
+<strong>Turn 45:</strong> Address competitive concerns (Apple and Samsung)
+
+<span style="color: #4ade80;">// Without memory management, by turn 45:</span>
+❌ AI might forget the target market from turn 1
+❌ Pricing context from turn 15 might be lost
+❌ Marketing decisions become disconnected from strategy
+
+<span style="color: #4ade80;">// With proper conversation management:</span>
+✅ Key decisions are summarized and carried forward
+✅ Context remains coherent across all turns
+✅ AI can reference earlier decisions in current responses
+                    </div>
+                </div>
+
+                <div class="fun-fact">
+                    <h4>📈 Conversation Scaling</h4>
+                    <p>Research shows conversation quality drops by 40-60% after 20+ turns without proper memory management. But with good context engineering, conversations can remain coherent for 100+ turns!</p>
+                </div>
+            </div>
+
+            <div class="concept-card">
+                <div class="concept-title">
+                    <span class="material-symbols-outlined">settings</span>
+                    Memory Management Strategies
+                </div>
+                <div class="concept-description">
+                    There are several approaches to maintaining context in long conversations. The best strategy depends on your use case, technical constraints, and the importance of preserving different types of information.
+                </div>
+
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Strategy</th>
+                            <th>How It Works</th>
+                            <th>Best For</th>
+                            <th>Limitations</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Conversation Buffer</strong></td>
+                            <td>Keep full conversation history</td>
+                            <td>Short to medium conversations</td>
+                            <td>Quickly hits token limits</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Sliding Window</strong></td>
+                            <td>Keep last N exchanges</td>
+                            <td>Ongoing dialogues</td>
+                            <td>Loses important early context</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Conversation Summary</strong></td>
+                            <td>Summarize older parts periodically</td>
+                            <td>Long strategic discussions</td>
+                            <td>May lose nuanced details</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Hybrid Buffer</strong></td>
+                            <td>Summary + recent full exchanges</td>
+                            <td>Complex professional use</td>
+                            <td>More complex to implement</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="example-box">
+                    <div class="example-title">
+                        <span class="material-symbols-outlined">code</span>
+                        Real-World Example: Software Development Planning
+                    </div>
+                    <div class="prompt-demo good-prompt">
+                        <div class="prompt-label">Conversation Summary Strategy</div>
+                        **Conversation Summary (Turns 1-25):**
+- Project: E-commerce mobile app for small businesses
+- Key requirements: iOS/Android, payment processing, inventory management
+- Technology stack decided: React Native, Node.js backend, MongoDB
+- Team: 3 developers, 1 designer, 6-month timeline
+- Budget constraints: $150K maximum
+- Previous concerns: User authentication security, offline functionality
+
+**Recent Full Context (Turns 26-30):**
+[Full conversation exchanges for immediate context]
+
+**Current Discussion:** API integration challenges with payment processor
+                    </div>
+                    
+                    <div class="prompt-demo good-prompt">
+                        <div class="prompt-label">Dynamic Context Update</div>
+                        As the conversation progresses, key decisions get added to the summary:
+- **Turn 35 Decision:** Chose Stripe for payment processing
+- **Turn 42 Decision:** Will implement progressive web app for offline features
+- **Current Focus:** Database schema design for product catalog
+                    </div>
+                </div>
+            </div>
+
+            <div class="quiz-section">
+                <div class="quiz-title">🧩 Test Your Understanding</div>
+                
+                <div class="question-card" onclick="toggleAnswer('q19')">
+                    <span class="difficulty-badge easy">EASY</span>
+                    <div class="question-text">Why do AI conversations become less coherent as they get longer?</div>
+                    <div class="answer" id="q19">
+                        <strong>Answer:</strong> AI models have a limited "context window" (working memory) that can only hold a certain number of tokens. As conversations grow longer, older parts "fall out" of this window and the AI can no longer see them. This means the AI might forget important decisions made earlier, repeat questions it already asked, or give advice that contradicts earlier parts of the conversation. It's like trying to have a conversation while only remembering the last few sentences!
+                    </div>
+                </div>
+
+                <div class="question-card" onclick="toggleAnswer('q20')">
+                    <span class="difficulty-badge medium">MEDIUM</span>
+                    <div class="question-text">A consulting firm uses AI to facilitate long strategic planning sessions with clients. How should they structure their conversation management to maintain coherence while capturing all important decisions?</div>
+                    <div class="answer" id="q20">
+                        <strong>Answer:</strong> They should implement a <strong>structured session management approach</strong>:
+
+<strong>Session Framework:</strong>
+1. **Pre-session context:** Client background, industry, stated objectives, previous recommendations
+2. **Live decision tracking:** Each major decision gets immediately added to a "session summary"
+3. **Topic-based organization:** Clearly delineate when switching between topics
+
+<strong>Memory Management Strategy:</strong>
+- Use conversation summary buffer: Keep full context for recent 10-15 exchanges, plus structured summary of all earlier decisions
+- **Decision registry:** Maintain a running list of key decisions with timestamps
+- **Cross-reference system:** When discussing new topics, AI references relevant earlier decisions
+
+<strong>Implementation:</strong> Every 20-30 turns, update the session summary with key points and decisions, use section headers to organize different discussion phases, include "decision checkpoints" where AI summarizes choices made before moving to new topics.
+                    </div>
+                </div>
+
+                <div class="question-card" onclick="toggleAnswer('q21')">
+                    <span class="difficulty-badge difficult">DIFFICULT</span>
+                    <div class="question-text">A medical research team conducts lengthy AI-assisted literature reviews spanning weeks. How should they architect their conversation management system for this complexity?</div>
+                    <div class="answer" id="q21">
+                        <strong>Answer:</strong> This requires a sophisticated, multi-layered conversation architecture:
+
+<strong>Hierarchical Memory Structure:</strong>
+1. **Meta-context:** Research objectives, methodology, key research questions, team member roles
+2. **Session summaries:** Weekly digest of papers reviewed, hypotheses formed, methodological decisions
+3. **Paper database:** Structured summaries of each reviewed paper with key findings and relevance scores
+4. **Decision audit trail:** All methodological choices with rationale and team member approval
+
+<strong>Multi-Researcher Coordination:</strong>
+- **Shared context base:** All team members' sessions contribute to collective knowledge base
+- **Research question evolution tracking:** Document how questions change as evidence accumulates
+- **Conflict resolution system:** When researchers disagree, flag for human team discussion
+- **Expertise routing:** Different team members' insights weighted based on domain expertise
+
+<strong>Scientific Rigor Requirements:</strong>
+- **Citation tracking:** Every AI statement linked to specific papers
+- **Confidence scoring:** AI must indicate certainty levels for different conclusions
+- **Methodology consistency:** Ensure review criteria remain consistent across weeks
+- **Bias detection:** Flag when conclusions might be influenced by early papers reviewed
+
+<strong>Technical Implementation:</strong> Vector database for semantic search across reviewed papers, version control for research questions, regular "research checkpoint" summaries, integration with research management tools, complete audit log for peer review transparency.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 8: Incorporating External Knowledge -->
+        <div class="section" id="section7">
+            <h2>
+                <span class="material-symbols-outlined">library_books</span>
+                Incorporating External Knowledge
+            </h2>
+            
+            <div class="concept-card">
+                <div class="concept-title">
+                    <span class="material-symbols-outlined">search</span>
+                    Beyond Built-in Knowledge
+                </div>
+                <div class="concept-description">
+                    AI models have impressive general knowledge, but they don't know everything - especially recent events, proprietary information, or specialized domain knowledge. Incorporating external knowledge means feeding the AI relevant information from documents, databases, or other sources as part of the context, creating much more informed and accurate responses.
+                </div>
+                
+                <div class="example-box">
+                    <div class="example-title">
+                        <span class="material-symbols-outlined">gavel</span>
+                        Real-World Example: Legal Document Analysis
+                    </div>
+                    
+                    <div class="prompt-demo bad-prompt">
+                        <div class="prompt-label">Without External Knowledge</div>
+                        What are the key compliance requirements for our industry?
+                        
+                        <em>AI Response: Generic compliance information that may not apply to the specific company or current regulations</em>
+                    </div>
+
+                    <div class="prompt-demo good-prompt">
+                        <div class="prompt-label">With External Knowledge</div>
+                        Based on the following company compliance documents and recent regulatory updates, identify the key compliance requirements for our industry:
+
+**Company Context:** 
+[Internal compliance policy document - 15 pages]
+
+**Recent Regulatory Updates:**
+[Federal Register updates from last 6 months - relevant sections]
+
+**Industry Guidelines:**
+[Trade association compliance checklist - current version]
+
+**Question:** What are our most critical compliance requirements, and where do we have potential gaps?
+                    </div>
+                    <p>The second approach provides specific, current, and directly relevant information instead of generic advice.</p>
+                </div>
+
+                <div class="fun-fact">
+                    <h4>🎯 Accuracy Boost</h4>
+                    <p>Studies show that providing relevant external context can improve AI accuracy by 60-85% for specialized tasks, while reducing hallucinations by up to 70%!</p>
+                </div>
+            </div>
+
+            <div class="concept-card">
+                <div class="concept-title">
+                    <span class="material-symbols-outlined">integration_instructions</span>
+                    Knowledge Integration Strategies
+                </div>
+                <div class="concept-description">
+                    There are several ways to incorporate external knowledge, from simple copy-paste approaches to sophisticated retrieval systems. The key is matching the complexity of your solution to your needs and resources.
+                </div>
+
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Method</th>
+                            <th>Complexity</th>
+                            <th>Best For</th>
+                            <th>Limitations</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Inline Context</strong></td>
+                            <td>Low</td>
+                            <td>Specific documents, one-time analysis</td>
+                            <td>Token limits, manual effort</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Document Chunks</strong></td>
+                            <td>Medium</td>
+                            <td>Long documents, systematic analysis</td>
+                            <td>May lose connections between sections</td>
+                        </tr>
+                        <tr>
+                            <td><strong>RAG Systems</strong></td>
+                            <td>High</td>
+                            <td>Large knowledge bases, dynamic retrieval</td>
+                            <td>Complex setup, requires technical expertise</td>
+                        </tr>
+                        <tr>
+                            <td><strong>API Integration</strong></td>
+                            <td>High</td>
+                            <td>Real-time data, live systems</td>
+                            <td>Depends on external system reliability</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="example-box">
+                    <div class="example-title">
+                        <span class="material-symbols-outlined">medical_services</span>
+                        Real-World Example: Medical Research Assistant
+                    </div>
+                    <div class="prompt-demo good-prompt">
+                        <div class="prompt-label">RAG-Style Knowledge Integration</div>
+                        **Research Question:** What are the latest treatment protocols for Type 2 diabetes in elderly patients?
+
+**Retrieved Knowledge Context:**
+- Recent clinical studies (last 2 years): [Relevant sections from 5 peer-reviewed papers]
+- Current treatment guidelines: [ADA 2024 guidelines - relevant excerpts]  
+- Drug interaction data: [Pharmacology database - elderly patient considerations]
+- Patient case studies: [3 similar cases with outcomes]
+
+**Instructions:** Synthesize this information to provide evidence-based treatment recommendations, including:
+1. Current best practices with citation levels
+2. Special considerations for elderly patients
+3. Potential drug interactions or contraindications
+4. Recent research findings that might change standard protocols
+
+**Output Requirements:** Include confidence levels and cite specific sources for each recommendation.
+                    </div>
+                </div>
+
+                <div class="example-box">
+                    <div class="example-title">
+                        <span class="material-symbols-outlined">support_agent</span>
+                        Real-World Example: Customer Support Knowledge Base
+                    </div>
+                    <div class="code-example">
+<span style="color: #4ade80;">// Dynamic Knowledge Retrieval Example</span>
+
+<strong>Customer Query:</strong> "My premium subscription isn't working after the recent app update"
+
+<strong>Retrieved Context:</strong>
+1. **Known Issues Database:** 
+   - Premium feature bugs in v3.2.1 (affects 15% of users)
+   - Workaround: Clear app cache and re-login
+
+2. **Customer Account Info:**
+   - Premium subscriber since 2022
+   - Using iOS version 3.2.1
+   - Last successful login: 3 days ago
+
+3. **Resolution Procedures:**
+   - Standard troubleshooting steps for premium issues
+   - Escalation criteria for unresolved premium problems
+
+<strong>AI Response Context:</strong> All the specific information needed to provide accurate, personalized support
+                    </div>
+                </div>
+            </div>
+
+            <div class="quiz-section">
+                <div class="quiz-title">🧩 Test Your Understanding</div>
+                
+                <div class="question-card" onclick="toggleAnswer('q22')">
+                    <span class="difficulty-badge easy">EASY</span>
+                    <div class="question-text">What's the main advantage of incorporating external knowledge into AI prompts?</div>
+                    <div class="answer" id="q22">
+                        <strong>Answer:</strong> The main advantage is <strong>accuracy and relevance</strong>. Instead of relying on the AI's general training knowledge (which might be outdated, incomplete, or too generic), external knowledge provides specific, current, and directly relevant information for the task at hand. This dramatically reduces hallucinations, improves factual accuracy, and allows the AI to give advice based on your specific situation, documents, or requirements rather than generic best practices.
+                    </div>
+                </div>
+
+                <div class="question-card" onclick="toggleAnswer('q23')">
+                    <span class="difficulty-badge medium">MEDIUM</span>
+                    <div class="question-text">A financial advisory firm wants their AI to help analyze client portfolios and provide investment recommendations. How should they structure their external knowledge integration?</div>
+                    <div class="answer" id="q23">
+                        <strong>Answer:</strong> They should create a <strong>multi-source knowledge integration system</strong>:
+
+<strong>Client-Specific Context:</strong>
+- Individual financial profile (age, income, goals, risk tolerance)
+- Current portfolio composition and performance
+- Investment timeline and liquidity needs
+- Previous investment preferences and constraints
+
+<strong>Market Intelligence:</strong>
+- Real-time market data for current holdings
+- Economic indicators relevant to client's sector focus
+- Recent market analysis and trend reports
+- Performance benchmarks for portfolio comparison
+
+<strong>Regulatory & Compliance Context:</strong>
+- Current SEC regulations for investment advice
+- Firm's internal compliance policies and restrictions
+- Fiduciary duty requirements and documentation needs
+- Risk disclosure requirements for different investment types
+
+<strong>Integration Strategy:</strong> Prioritize client profile and regulatory requirements (always present), dynamically pull relevant market data based on current holdings, include similar client case studies for context, always require human advisor review, include confidence levels and risk assessments, maintain audit trail of all data sources used.
+                    </div>
+                </div>
+
+                <div class="question-card" onclick="toggleAnswer('q24')">
+                    <span class="difficulty-badge difficult">DIFFICULT</span>
+                    <div class="question-text">A pharmaceutical company wants to use AI to help research teams analyze clinical trial data and generate regulatory submission documents. How should they architect their knowledge integration system?</div>
+                    <div class="answer" id="q24">
+                        <strong>Answer:</strong> This requires a sophisticated, multi-layered knowledge architecture with strict quality controls:
+
+<strong>Tiered Knowledge Sources:</strong>
+
+**Tier 1 (Regulatory Authority):**
+- Current FDA guidelines and requirements (always include)
+- Company's regulatory history and precedents
+- Legal and compliance requirements (non-negotiable)
+
+**Tier 2 (Scientific Foundation):**
+- Relevant peer-reviewed literature (systematic retrieval)
+- Industry best practices and standards
+- Statistical methodology requirements
+
+**Tier 3 (Company-Specific Data):**
+- Current trial data with quality scores
+- Historical company submissions and outcomes
+- Competitive intelligence and market context
+
+<strong>Integration Architecture:</strong>
+1. **Source validation:** Each data source tagged with reliability scores, currency, and authority level
+2. **Conflict resolution:** When sources disagree, flag for human expert review
+3. **Citation tracking:** Every AI-generated statement linked to specific sources
+4. **Version control:** Track changes in guidelines and data over time
+5. **Access controls:** Different team members see different data based on roles
+
+<strong>Quality Assurance:</strong> Confidence scoring, human checkpoints, audit trails, bias detection, regulatory review. <strong>Technical Implementation:</strong> Vector databases for semantic search, real-time integration with clinical trial systems, automated alerts for new FDA guidance, ML models trained on successful vs. rejected submissions, secure API connections for data integrity.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 9: Advanced Integration Techniques -->
+        <div class="section" id="section8">
+            <h2>
+                <span class="material-symbols-outlined">rocket_launch</span>
+                Advanced Integration Techniques
+            </h2>
+            
+            <div class="concept-card">
+                <div class="concept-title">
+                    <span class="material-symbols-outlined">handyman</span>
+                    Bringing It All Together
+                </div>
+                <div class="concept-description">
+                    Advanced integration combines all the techniques you've learned - prompt engineering, context management, external knowledge, and conversation flow - into sophisticated AI systems that can handle complex, real-world business challenges. This is where AI transforms from a simple question-answering tool into a powerful business partner.
+                </div>
+                
+                <div class="example-box">
+                    <div class="example-title">
+                        <span class="material-symbols-outlined">analytics</span>
+                        Real-World Example: Complete Business Analysis System
+                    </div>
+                    <div class="code-example">
+<span style="color: #4ade80;">// Advanced Integration: Multi-Modal Business Analysis</span>
+
+<strong>System Role:</strong> Senior business consultant with expertise in market analysis, financial modeling, and strategic planning
+
+<strong>Context Layers:</strong>
+1. **Company Profile:** Industry, size, market position, recent performance
+2. **Market Intelligence:** Competitor analysis, industry trends, economic indicators  
+3. **Internal Data:** Financial statements, operational metrics, customer feedback
+4. **External Knowledge:** Industry reports, regulatory changes, expert analyses
+
+<strong>Conversation Management:</strong>
+- Session summaries for multi-hour strategy discussions
+- Decision tracking across multiple analysis phases
+- Cross-reference system linking insights across different data sources
+
+<strong>Dynamic Capabilities:</strong>
+- Real-time data retrieval based on conversation direction
+- Adaptive questioning to uncover blind spots
+- Multi-scenario modeling with confidence intervals
+- Stakeholder-specific communication adjustments
+
+<strong>Output Optimization:</strong>
+- Executive summaries for C-suite (high-level insights)
+- Detailed analyses for department heads (actionable specifics)
+- Implementation roadmaps with timelines and resource requirements
+                    </div>
+                </div>
+
+                <div class="fun-fact">
+                    <h4>💼 Business Impact</h4>
+                    <p>Companies using advanced AI integration report 3-5x improvements in analysis speed, 40-60% better decision quality, and 25-35% reduction in consultant costs!</p>
+                </div>
+            </div>
+
+            <div class="concept-card">
+                <div class="concept-title">
+                    <span class="material-symbols-outlined">architecture</span>
+                    Advanced Design Patterns
+                </div>
+                <div class="concept-description">
+                    Professional AI systems use sophisticated design patterns that combine multiple techniques strategically. These patterns represent proven approaches for handling complex business requirements while maintaining reliability, accuracy, and user satisfaction.
+                </div>
+
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Pattern</th>
+                            <th>Components Used</th>
+                            <th>Best Applications</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Multi-Expert Ensemble</strong></td>
+                            <td>Multiple role prompts + consensus building</td>
+                            <td>Complex decisions requiring diverse perspectives</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Contextual RAG Pipeline</strong></td>
+                            <td>External knowledge + conversation memory + role prompting</td>
+                            <td>Knowledge-intensive consulting and analysis</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Adaptive Conversation Flow</strong></td>
+                            <td>Chain-of-thought + dynamic context + constraint systems</td>
+                            <td>Interactive problem-solving and planning</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Hierarchical Decision Trees</strong></td>
+                            <td>Multi-stage prompts + escalation rules + confidence scoring</td>
+                            <td>Complex approval processes and risk management</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="example-box">
+                    <div class="example-title">
+                        <span class="material-symbols-outlined">medical_services</span>
+                        Real-World Example: Healthcare Decision Support
+                    </div>
+                    <div class="prompt-demo good-prompt">
+                        <div class="prompt-label">Multi-Expert Pattern</div>
+                        **Clinical Decision Support System**
+
+**Expert 1 - Clinical Diagnostician:**
+You are an experienced diagnostician. Analyze symptoms and medical history to suggest differential diagnoses with probability rankings.
+
+**Expert 2 - Treatment Specialist:**
+You are a treatment planning expert. Based on the diagnostic assessment, recommend evidence-based treatment options with risk-benefit analyses.
+
+**Expert 3 - Patient Safety Monitor:**
+You are a patient safety specialist. Review all recommendations for potential risks, contraindications, and safety concerns.
+
+**Integration Logic:**
+1. Each expert provides independent analysis
+2. System identifies agreements and conflicts
+3. Confidence scoring highlights uncertain areas
+4. Final recommendation synthesizes all perspectives
+5. Human physician makes final clinical decisions
+
+**Safeguards:**
+- All recommendations marked "FOR PHYSICIAN REVIEW ONLY"
+- Audit trail of all expert inputs
+- Escalation protocols for high-risk scenarios
+                    </div>
+                </div>
+            </div>
+
+            <div class="concept-card">
+                <div class="concept-title">
+                    <span class="material-symbols-outlined">checklist</span>
+                    Implementation Best Practices
+                </div>
+                <div class="concept-description">
+                    Building production-ready AI systems requires careful planning, testing, and monitoring. The most sophisticated prompts won't help if the overall system isn't reliable, secure, and maintainable.
+                </div>
+
+                <div class="example-box">
+                    <div class="example-title">
+                        <span class="material-symbols-outlined">fact_check</span>
+                        Real-World Example: Production Deployment Checklist
+                    </div>
+                    <div class="code-example">
+<strong>Pre-Deployment Requirements:</strong>
+
+✅ **Prompt Testing & Validation:**
+   - A/B test different prompt variations
+   - Edge case testing with unusual inputs  
+   - Performance benchmarking against human experts
+   - Bias and fairness evaluation across user groups
+
+✅ **Context Engineering Verification:**
+   - Memory management stress testing
+   - Knowledge base accuracy validation
+   - External API reliability checks
+   - Token usage optimization and cost modeling
+
+✅ **Security & Compliance:**
+   - Data privacy and GDPR compliance review
+   - Access controls and audit logging
+   - Prompt injection attack testing
+   - Industry-specific regulatory compliance
+
+✅ **Monitoring & Maintenance:**
+   - Real-time performance dashboards
+   - User satisfaction tracking
+   - Continuous prompt performance monitoring
+   - Automated fallback procedures for system failures
+
+✅ **User Experience Design:**
+   - Clear AI limitations communication
+   - Human escalation pathways
+   - Response time optimization
+   - Multi-device compatibility testing
+                    </div>
+                </div>
+
+                <div class="fun-fact">
+                    <h4>🎉 Congratulations!</h4>
+                    <p>You've mastered the fundamentals of context and prompt engineering! You now have the skills to design AI systems that are not just clever, but truly useful for solving real business problems.</p>
+                </div>
+            </div>
+
+            <div class="quiz-section">
+                <div class="quiz-title">🧩 Final Challenge</div>
+                
+                <div class="question-card" onclick="toggleAnswer('q25')">
+                    <span class="difficulty-badge easy">EASY</span>
+                    <div class="question-text">What are the key components of a well-integrated AI system?</div>
+                    <div class="answer" id="q25">
+                        <strong>Answer:</strong> A well-integrated AI system combines: 1) <strong>Clear role definition</strong> - the AI knows what it is and how to behave, 2) <strong>Structured context management</strong> - relevant information is organized and accessible, 3) <strong>External knowledge integration</strong> - access to current, specific information beyond training data, 4) <strong>Conversation continuity</strong> - memory management for coherent multi-turn interactions, 5) <strong>Appropriate constraints</strong> - output formatting and quality controls, 6) <strong>Safety and monitoring systems</strong> - error handling and human oversight, and 7) <strong>User experience design</strong> - clear expectations and smooth interactions.
+                    </div>
+                </div>
+
+                <div class="question-card" onclick="toggleAnswer('q26')">
+                    <span class="difficulty-badge medium">MEDIUM</span>
+                    <div class="question-text">A growing startup wants to implement AI across multiple departments but with limited technical resources. How should they approach building an integrated AI system?</div>
+                    <div class="answer" id="q26">
+                        <strong>Answer:</strong> They should build a <strong>modular, shared-foundation approach</strong>:
+
+<strong>Core Foundation (Build Once):</strong>
+- Shared context management system for company information
+- Common knowledge base with company policies, products, and procedures
+- Standardized role definitions and communication guidelines
+- Universal safety and monitoring framework
+
+<strong>Department-Specific Modules:</strong>
+- **Sales:** CRM integration, prospect research, proposal generation
+- **Marketing:** Brand voice consistency, campaign planning, content creation
+- **Support:** Ticket routing, knowledge base queries, escalation procedures  
+- **Product:** User feedback analysis, feature prioritization, technical documentation
+
+<strong>Implementation Strategy:</strong> Start with one department (highest ROI/simplest needs), build robust foundation with that department's requirements, add other departments incrementally leveraging shared components, create cross-department knowledge sharing, establish company-wide AI governance.
+
+<strong>Resource Optimization:</strong> Use no-code/low-code platforms where possible, partner with AI consultants for initial setup, train internal champions in each department, focus on high-impact, simple-to-implement use cases first.
+                    </div>
+                </div>
+
+                <div class="question-card" onclick="toggleAnswer('q27')">
+                    <span class="difficulty-badge difficult">DIFFICULT</span>
+                    <div class="question-text">A multinational corporation wants to deploy an AI system for complex strategic planning across different time zones, languages, and cultural contexts. Design a comprehensive integration architecture.</div>
+                    <div class="answer" id="q27">
+                        <strong>Answer:</strong> This requires a sophisticated, multi-dimensional architecture:
+
+<strong>Global Context Architecture:</strong>
+
+**Cultural & Linguistic Layer:**
+- Multi-language prompt templates with cultural communication norms
+- Regional business practice databases (decision-making styles, hierarchy expectations)
+- Time-zone aware scheduling and asynchronous collaboration tools
+- Cultural sensitivity filters for different stakeholder groups
+
+**Stakeholder Management System:**
+- Role-based context (CEO, regional managers, technical leads, legal teams)
+- Stakeholder-specific information access controls
+- Communication style adaptation (formal/informal, direct/diplomatic)
+- Expertise routing (technical questions → technical stakeholders)
+
+**Security & Compliance Framework:**
+- Data residency controls (EU data stays in EU, etc.)
+- Multi-tier security classification (public, internal, confidential, restricted)
+- Regulatory compliance checking (GDPR, CCPA, industry-specific regulations)
+- Audit trails with geographic and regulatory context
+
+**Long-term Memory Architecture:**
+- Hierarchical session management (daily → weekly → project → strategic cycles)
+- Decision archaeology (who decided what, when, under what context)
+- Cross-cultural decision pattern recognition
+- Strategic evolution tracking over months/years
+
+**Knowledge Integration:**
+- Real-time market data with regional specificity
+- Competitive intelligence with geographic relevance
+- Internal performance data with appropriate access controls
+- External expert insights from region-specific advisors
+
+**Technical Infrastructure:**
+- Distributed deployment across regions for data sovereignty
+- Asynchronous collaboration tools for time-zone differences
+- Multi-modal communication (text, voice, visual for different cultures)
+- Failover systems and redundancy for global reliability
+
+**Governance Framework:**
+- Global AI ethics committee with regional representation
+- Regular bias auditing across cultural and linguistic dimensions
+- Performance monitoring with cultural sensitivity metrics
+- Continuous training on cross-cultural AI best practices
+                    </div>
+                </div>
+            </div>
+
+            <div class="phase-complete">
+                <h3>🎉 Congratulations! Phase 2 Complete</h3>
+                <p>You've successfully mastered advanced context and prompt engineering! You now understand:</p>
+                <ul>
+                    <li>Zero-shot, one-shot, and few-shot prompting techniques</li>
+                    <li>Chain-of-thought reasoning for complex problems</li>
+                    <li>Role-based prompting for specialized responses</li>
+                    <li>Constraint-based prompting for precise outputs</li>
+                    <li>Context engineering fundamentals and architecture</li>
+                    <li>Managing long conversations and memory systems</li>
+                    <li>Incorporating external knowledge and RAG systems</li>
+                    <li>Advanced integration patterns for production systems</li>
+                    <li>Best practices for reliable, scalable AI implementations</li>
+                </ul>
+                <div style="margin-top: 2rem; padding: 1rem; background: rgba(17, 147, 212, 0.1); border-radius: 8px; border-left: 4px solid var(--primary-color);">
+                    <h4 style="color: var(--primary-color); margin-bottom: 0.5rem;">🚀 Your Journey Forward</h4>
+                    <p style="color: var(--text-secondary); margin-bottom: 1rem;">You now have the skills to design AI systems that are not just functional, but truly intelligent, reliable, and valuable for real-world applications. Consider exploring:</p>
+                    <ul style="color: var(--text-secondary);">
+                        <li>Practice with real projects in your organization</li>
+                        <li>Experiment with advanced tools like RAG systems and vector databases</li>
+                        <li>Stay current with AI research developments and new techniques</li>
+                        <li>Join communities of prompt engineers and AI practitioners</li>
+                        <li>Measure and iterate on your AI systems' performance</li>
+                        <li>Share knowledge and teach others what you've learned</li>
+                    </ul>
+                </div>
+                <a href="index.html" class="next-phase-btn">
+                    <span class="material-symbols-outlined">arrow_back</span>
+                    Return to Phase 1
+                </a>
+            </div>
+        </div>
+
+        <div class="navigation">
+            <button class="nav-btn" id="prevBtn" onclick="previousSection()" disabled>
+                <span class="material-symbols-outlined">arrow_back</span>
+                Previous
+            </button>
+            <button class="nav-btn" id="nextBtn" onclick="nextSection()">
+                Next
+                <span class="material-symbols-outlined">arrow_forward</span>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        let currentSection = 0;
+        const totalSections = 9;
+        const completedSections = new Set();
+
+        function updateProgress() {
+            const progress = ((currentSection + 1) / totalSections) * 100;
+            document.getElementById('progressFill').style.width = progress + '%';
+            document.getElementById('progressText').textContent = 
+                `Section ${currentSection + 1} of ${totalSections} - ${getSectionTitle(currentSection)}`;
+        }
+
+        function getSectionTitle(index) {
+            const titles = [
+                "Zero-Shot Prompting Mastery",
+                "One-Shot & Few-Shot Techniques", 
+                "Chain-of-Thought Reasoning",
+                "Role-Based Prompting",
+                "Constraint-Based Prompting",
+                "Context Engineering Fundamentals",
+                "Managing Long Conversations",
+                "Incorporating External Knowledge",
+                "Advanced Integration Techniques"
+            ];
+            return titles[index];
+        }
+
+        function showSection(index) {
+            // Hide all sections
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Show current section
+            document.getElementById(`section${index}`).classList.add('active');
+            
+            // Update navigation buttons
+            document.getElementById('prevBtn').disabled = index === 0;
+            document.getElementById('nextBtn').disabled = index === totalSections - 1;
+            
+            if (index === totalSections - 1) {
+                document.getElementById('nextBtn').innerHTML = 'Phase Complete! <span class="material-symbols-outlined">check_circle</span>';
+            } else {
+                document.getElementById('nextBtn').innerHTML = 'Next <span class="material-symbols-outlined">arrow_forward</span>';
+            }
+            
+            // Update table of contents
+            updateTableOfContents();
+            
+            // Mark section as completed when viewed
+            completedSections.add(index);
+            
+            // Update progress
+            updateProgress();
+            
+            // Scroll to top
+            window.scrollTo(0, 0);
+        }
+
+        function updateTableOfContents() {
+            const tocItems = document.querySelectorAll('.sidebar-toc-item');
+            tocItems.forEach((item, index) => {
+                item.classList.remove('active', 'completed');
+                if (index === currentSection) {
+                    item.classList.add('active');
+                } else if (completedSections.has(index)) {
+                    item.classList.add('completed');
+                }
+            });
+        }
+
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebarOverlay');
+            const container = document.getElementById('mainContainer');
+            
+            const isOpen = sidebar.classList.contains('open');
+            
+            if (isOpen) {
+                closeSidebar();
+            } else {
+                sidebar.classList.add('open');
+                overlay.classList.add('active');
+                if (window.innerWidth > 768) {
+                    container.classList.add('sidebar-open');
+                }
+            }
+        }
+
+        function closeSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebarOverlay');
+            const container = document.getElementById('mainContainer');
+            
+            sidebar.classList.remove('open');
+            overlay.classList.remove('active');
+            container.classList.remove('sidebar-open');
+        }
+
+        function nextSection() {
+            if (currentSection < totalSections - 1) {
+                currentSection++;
+                showSection(currentSection);
+            }
+        }
+
+        function previousSection() {
+            if (currentSection > 0) {
+                currentSection--;
+                showSection(currentSection);
+            }
+        }
+
+        function goToSection(index) {
+            currentSection = index;
+            showSection(currentSection);
+            closeSidebar(); // Close sidebar after navigation on mobile
+        }
+
+        function toggleAnswer(questionId) {
+            const answer = document.getElementById(questionId);
+            const isVisible = answer.style.display === 'block';
+            answer.style.display = isVisible ? 'none' : 'block';
+            
+            // Add animation effect
+            if (!isVisible) {
+                answer.style.opacity = '0';
+                setTimeout(() => {
+                    answer.style.opacity = '1';
+                    answer.style.transition = 'opacity 0.4s ease';
+                }, 10);
+            }
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'ArrowLeft') {
+                previousSection();
+            } else if (event.key === 'ArrowRight') {
+                nextSection();
+            } else if (event.key === 'Escape') {
+                closeSidebar();
+            }
+        });
+
+        // Initialize
+        updateProgress();
+        updateTableOfContents();
+        
+        // Enhanced interaction feedback
+        document.querySelectorAll('.question-card').forEach(card => {
+            card.addEventListener('click', function() {
+                this.style.transform = 'scale(0.98)';
+                setTimeout(() => {
+                    this.style.transform = 'scale(1)';
+                }, 150);
+            });
+        });
+
+        // Add smooth scrolling for navigation
+        document.querySelectorAll('.nav-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                this.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    this.style.transform = 'scale(1)';
+                }, 100);
+            });
+        });
+
+        // Add hover effects for sidebar TOC items
+        document.querySelectorAll('.sidebar-toc-item').forEach(item => {
+            item.addEventListener('mouseenter', function() {
+                if (!this.classList.contains('active')) {
+                    this.style.transform = 'translateX(4px)';
+                }
+            });
+            
+            item.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateX(0)';
+            });
+        });
+
+        // Progress bar animation on load
+        setTimeout(() => {
+            updateProgress();
+        }, 500);
+
+        // Close sidebar when clicking outside on mobile
+        document.addEventListener('click', function(event) {
+            const sidebar = document.getElementById('sidebar');
+            const menuToggle = document.querySelector('.menu-toggle');
+            const isClickInsideSidebar = sidebar.contains(event.target);
+            const isClickOnMenuToggle = menuToggle.contains(event.target);
+            
+            if (!isClickInsideSidebar && !isClickOnMenuToggle && sidebar.classList.contains('open')) {
+                closeSidebar();
+            }
+        });
+
+        // Handle mobile responsiveness
+        function handleResize() {
+            if (window.innerWidth <= 768) {
+                // Show mobile back button
+                const mobileBack = document.querySelector('.mobile-back');
+                if (mobileBack) mobileBack.style.display = 'flex';
+                // Hide desktop nav links
+                const navLinks = document.querySelector('.nav-links');
+                if (navLinks) navLinks.style.display = 'none';
+                // Show mobile menu toggle
+                const mobileToggle = document.querySelector('.menu-toggle[style*="display: none"]');
+                if (mobileToggle) mobileToggle.style.display = 'flex';
+            } else {
+                // Hide mobile back button
+                const mobileBack = document.querySelector('.mobile-back');
+                if (mobileBack) mobileBack.style.display = 'none';
+                // Show desktop nav links
+                const navLinks = document.querySelector('.nav-links');
+                if (navLinks) navLinks.style.display = 'flex';
+                // Hide mobile menu toggle
+                const mobileToggle = document.querySelector('.menu-toggle[style*="display: none"]');
+                if (mobileToggle) mobileToggle.style.display = 'none';
+            }
+        }
+
+        // Initial check and event listener for window resize
+        handleResize();
+        window.addEventListener('resize', handleResize);
+    </script>
+</body>
+</html>
