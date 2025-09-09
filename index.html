@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Academy - Phase 1: AI Foundations</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0">
     <style>
         :root {
             --primary-color: #38e07b;
@@ -695,19 +695,16 @@
             </div>
         </div>
 
-        <!-- Continue with other sections... -->
-        <!-- For brevity, I'll include just one more section to show the pattern -->
-
         <!-- Section 2: Machine Learning -->
         <div class="section" id="section1">
             <h2>
-                <span class="material-symbols-outlined">psychology</span>
+                <span class="material-symbols-outlined">school</span>
                 Machine Learning Basics
             </h2>
             
             <div class="concept-card">
                 <div class="concept-title">
-                    <span class="material-symbols-outlined">school</span>
+                    <span class="material-symbols-outlined">auto_awesome</span>
                     What is Machine Learning?
                 </div>
                 <div class="concept-description">
@@ -723,159 +720,777 @@
                 </div>
             </div>
 
-            <!-- More sections would follow the same pattern... -->
+            <div class="concept-card">
+                <div class="concept-title">
+                    <span class="material-symbols-outlined">diversity_3</span>
+                    Three Types of Machine Learning
+                </div>
+                <div class="concept-description">
+                    <strong>1. Supervised Learning:</strong> Like learning with a teacher who gives you the right answers. You show the computer examples with correct labels.
+                    <br><br>
+                    <strong>2. Unsupervised Learning:</strong> Like exploring a new city without a map. The computer finds hidden patterns in data without being told what to look for.
+                    <br><br>
+                    <strong>3. Reinforcement Learning:</strong> Like learning to play a video game through trial and error, getting rewards for good moves and penalties for bad ones.
+                </div>
 
-            <div class="phase-complete">
-                <h3>🎉 Ready for the Next Challenge?</h3>
-                <p>You've mastered the fundamentals! Continue to Phase 2 to learn advanced techniques.</p>
-                <a href="#" class="next-phase-btn">
-                    Continue to Phase 2
-                    <span class="material-symbols-outlined">arrow_forward</span>
-                </a>
+                <div class="example-box">
+                    <div class="example-title">
+                        <span class="material-symbols-outlined">shopping_cart</span>
+                        Real-World Example: Amazon Recommendations
+                    </div>
+                    <p><strong>Supervised:</strong> "People who bought this book also bought..." (learning from past purchase patterns)<br>
+                    <strong>Unsupervised:</strong> Discovering that customers naturally fall into groups like "tech enthusiasts" or "gardening lovers"<br>
+                    <strong>Reinforcement:</strong> Learning which recommendations actually lead to purchases and improving over time</p>
+                </div>
+
+                <div class="fun-fact">
+                    <h4>🎮 Fun Fact</h4>
+                    <p>The AI that beat professional players in games like Chess, Go, and even video games like Dota 2 used reinforcement learning - playing millions of games against itself to get better, just like how you might practice a game over and over!</p>
+                </div>
+            </div>
+
+            <div class="quiz-section">
+                <div class="quiz-title">🧩 Test Your Understanding</div>
+                
+                <div class="question-card" onclick="toggleAnswer('q4')">
+                    <span class="difficulty-badge easy">EASY</span>
+                    <div class="question-text">If you wanted to train an AI to recognize cats in photos, what would you need to provide?</div>
+                    <div class="answer" id="q4">
+                        <strong>Answer:</strong> Thousands of photos labeled as either "cat" or "not cat." This is supervised learning because you're providing the correct answers (labels) for the AI to learn from.
+                    </div>
+                </div>
+
+                <div class="question-card" onclick="toggleAnswer('q5')">
+                    <span class="difficulty-badge medium">MEDIUM</span>
+                    <div class="question-text">A music streaming service wants to create automatic playlists by grouping similar songs together, but they don't know what the groups should be. What type of machine learning would work best?</div>
+                    <div class="answer" id="q5">
+                        <strong>Answer:</strong> Unsupervised learning. The AI would analyze all the songs' features (tempo, genre, mood, etc.) and automatically discover natural groupings like "energetic workout songs," "relaxing evening music," or "upbeat pop hits" without being told what categories to create.
+                    </div>
+                </div>
+
+                <div class="question-card" onclick="toggleAnswer('q6')">
+                    <span class="difficulty-badge difficult">DIFFICULT</span>
+                    <div class="question-text">A self-driving car company wants to improve how their cars handle unexpected situations like construction zones. The car gets positive feedback for safe navigation and negative feedback for causing delays or safety issues. What type of learning is this, and what challenges might they face?</div>
+                    <div class="answer" id="q6">
+                        <strong>Answer:</strong> This is reinforcement learning. Challenges include: 1) Safety - the car can't learn through dangerous real-world mistakes, 2) Sparse feedback - most situations are routine, so learning opportunities for edge cases are rare, 3) Generalization - the car must apply lessons from one construction zone to completely different ones, and 4) Real-time adaptation - decisions must be made instantly, not after long training periods.
+                    </div>
+                </div>
             </div>
         </div>
 
-        <!-- Navigation -->
-        <div class="navigation">
-            <button class="nav-btn" id="prevBtn" onclick="previousSection()" disabled>
-                <span class="material-symbols-outlined">arrow_back</span>
-                Previous
-            </button>
-            <button class="nav-btn" id="nextBtn" onclick="nextSection()">
-                Next
+        <!-- Section 3: Large Language Models -->
+        <div class="section" id="section2">
+            <h2>
+                <span class="material-symbols-outlined">chat</span>
+                Large Language Models (LLMs)
+            </h2>
+            
+            <div class="concept-card">
+                <div class="concept-title">
+                    <span class="material-symbols-outlined">library_books</span>
+                    What are Large Language Models?
+                </div>
+                <div class="concept-description">
+                    Think of an LLM as a super-smart person who has read almost everything ever written on the internet - books, articles, websites, conversations - and can use all that knowledge to chat with you, answer questions, write stories, or help with homework. It's like having a conversation with someone who has an incredible memory and can write in any style you need.
+                </div>
+                
+                <div class="example-box">
+                    <div class="example-title">
+                        <span class="material-symbols-outlined">edit</span>
+                        Real-World Example: ChatGPT Writing Assistant
+                    </div>
+                    <p>Imagine you ask ChatGPT: "Write a funny birthday invitation for my 8-year-old's superhero-themed party." It doesn't have a template stored somewhere. Instead, it combines its knowledge of birthday parties, superhero themes, age-appropriate humor, and invitation formats to create something original that fits your specific request perfectly.</p>
+                </div>
+            </div>
+
+            <div class="concept-card">
+                <div class="concept-title">
+                    <span class="material-symbols-outlined">psychology</span>
+                    How Do LLMs Learn?
+                </div>
+                <div class="concept-description">
+                    LLMs learn by playing a massive "fill-in-the-blank" game. They read millions of sentences with some words hidden, then try to guess what comes next. Over time, they get incredibly good at predicting not just the next word, but understanding context, meaning, and even emotional tone.
+                </div>
+
+                <div class="example-box">
+                    <div class="example-title">
+                        <span class="material-symbols-outlined">translate</span>
+                        Real-World Example: Google Translate
+                    </div>
+                    <p>When you translate "I'm feeling under the weather" from English to Spanish, Google's LLM doesn't just swap words. It understands this is an idiom meaning "I'm sick" and translates the meaning, not the literal words. It learned this by seeing millions of examples of how people actually use language in different contexts.</p>
+                </div>
+
+                <div class="fun-fact">
+                    <h4>🤯 Mind-Blowing Fact</h4>
+                    <p>GPT-3 was trained on about 45TB of text data - that's like reading 10 million books! And it took thousands of powerful computers months to train. GPT-4 is even larger and more capable, but the exact numbers are kept secret!</p>
+                </div>
+            </div>
+
+            <div class="quiz-section">
+                <div class="quiz-title">🧩 Test Your Understanding</div>
+                
+                <div class="question-card" onclick="toggleAnswer('q7')">
+                    <span class="difficulty-badge easy">EASY</span>
+                    <div class="question-text">Why can ChatGPT write poems, answer science questions, and help with coding all in the same conversation?</div>
+                    <div class="answer" id="q7">
+                        <strong>Answer:</strong> Because it's a Large Language Model trained on diverse text from all over the internet - poetry books, science articles, programming tutorials, and more. This vast training allows it to understand and generate text on almost any topic.
+                    </div>
+                </div>
+
+                <div class="question-card" onclick="toggleAnswer('q8')">
+                    <span class="difficulty-badge medium">MEDIUM</span>
+                    <div class="question-text">A student asks an LLM to "Explain photosynthesis like I'm 5 years old." How does the LLM know to simplify its language and use analogies?</div>
+                    <div class="answer" id="q8">
+                        <strong>Answer:</strong> The LLM learned from millions of examples of how people explain complex topics to children - educational websites, children's books, parent-child conversations online, and teaching materials. It recognizes the pattern of "explain like I'm 5" and adapts its vocabulary, sentence structure, and uses simple analogies accordingly.
+                    </div>
+                </div>
+
+                <div class="question-card" onclick="toggleAnswer('q9')">
+                    <span class="difficulty-badge difficult">DIFFICULT</span>
+                    <div class="question-text">An LLM occasionally generates false information confidently (called "hallucination"). Why does this happen, and what does this tell us about how LLMs actually work?</div>
+                    <div class="answer" id="q9">
+                        <strong>Answer:</strong> LLMs generate text by predicting what's most likely to come next based on patterns in training data, not by actually "knowing" facts. When faced with topics they haven't seen much, or when making logical connections, they might generate plausible-sounding but incorrect information. This reveals that LLMs are sophisticated pattern-matching systems rather than true knowledge databases - they're great at reproducing patterns from their training but don't have real understanding or fact-checking abilities.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 4: Transformers -->
+        <div class="section" id="section3">
+            <h2>
+                <span class="material-symbols-outlined">transform</span>
+                Understanding Transformers
+            </h2>
+            
+            <div class="concept-card">
+                <div class="concept-title">
+                    <span class="material-symbols-outlined">visibility</span>
+                    What are Transformers?
+                </div>
+                <div class="concept-description">
+                    Imagine you're reading a mystery novel, and you need to figure out who "he" refers to in a sentence. You don't just look at the word before it - you consider the entire chapter, remembering all the male characters mentioned. Transformers work similarly - they look at all words in a sentence at once and figure out how each word relates to every other word, making them incredibly good at understanding context.
+                </div>
+                
+                <div class="example-box">
+                    <div class="example-title">
+                        <span class="material-symbols-outlined">search</span>
+                        Real-World Example: Google Search
+                    </div>
+                    <p>When you search "apple stock price," Google needs to understand you mean Apple the company, not apple the fruit. Transformers help by looking at the context clue "stock price" and connecting it to financial information about Apple Inc., not grocery stores selling apples. This attention to context makes search results much more accurate.</p>
+                </div>
+            </div>
+
+            <div class="concept-card">
+                <div class="concept-title">
+                    <span class="material-symbols-outlined">center_focus_strong</span>
+                    The Magic of "Attention"
+                </div>
+                <div class="concept-description">
+                    The key innovation in Transformers is called "attention." It's like having a superpower where you can instantly see how every word in a sentence connects to every other word. This helps the AI understand complex relationships, pronoun references, and context much better than older methods.
+                </div>
+
+                <div class="example-box">
+                    <div class="example-title">
+                        <span class="material-symbols-outlined">menu_book</span>
+                        Real-World Example: Reading Comprehension
+                    </div>
+                    <p>Consider: "The dog chased the cat. It was very fast." What does "it" refer to? A Transformer looks at both sentences simultaneously, sees that "chased" suggests movement and speed, and correctly determines that "it" likely refers to whichever animal was doing the chasing - the dog. This attention mechanism makes AI much better at understanding stories and conversations.</p>
+                </div>
+
+                <div class="fun-fact">
+                    <h4>⚡ Revolutionary Fact</h4>
+                    <p>Before Transformers, AI had to read text word by word, like reading with a narrow flashlight. Transformers can "see" the whole page at once, making them hundreds of times faster to train and much better at understanding context!</p>
+                </div>
+            </div>
+
+            <div class="quiz-section">
+                <div class="quiz-title">🧩 Test Your Understanding</div>
+                
+                <div class="question-card" onclick="toggleAnswer('q10')">
+                    <span class="difficulty-badge easy">EASY</span>
+                    <div class="question-text">Why are Transformers better at understanding "The keys are on the table. Please bring them to me" compared to older AI models?</div>
+                    <div class="answer" id="q10">
+                        <strong>Answer:</strong> Transformers can look at both sentences simultaneously and use attention to connect "them" back to "keys" and understand the full context. Older models might get confused because they process words in sequence and might lose track of what "them" refers to by the time they reach the second sentence.
+                    </div>
+                </div>
+
+                <div class="question-card" onclick="toggleAnswer('q11')">
+                    <span class="difficulty-badge medium">MEDIUM</span>
+                    <div class="question-text">How would a Transformer's attention mechanism help in translating "I saw the man with the telescope" - a sentence that could mean two different things?</div>
+                    <div class="answer" id="q11">
+                        <strong>Answer:</strong> The attention mechanism would look at surrounding context to determine meaning. If the previous sentences mentioned someone using a telescope to observe, it would likely interpret it as "I (using a telescope) saw the man." If the context was about people carrying objects, it might interpret it as "I saw the man (who had a telescope)." The attention helps disambiguate by considering broader context.
+                    </div>
+                </div>
+
+                <div class="question-card" onclick="toggleAnswer('q12')">
+                    <span class="difficulty-badge difficult">DIFFICULT</span>
+                    <div class="question-text">A Transformer-based translation system sometimes struggles with very long documents, even though Transformers are supposed to see "everything at once." What technical limitation might cause this, and how might it be addressed?</div>
+                    <div class="answer" id="q12">
+                        <strong>Answer:</strong> The limitation is computational complexity - attention mechanisms require processing every word against every other word, which grows exponentially with document length. For a 1000-word document, that's 1 million connections to process! Solutions include: 1) Breaking long documents into chunks, 2) Using "sparse attention" that only focuses on nearby and important words, 3) Hierarchical processing that first summarizes sections then processes the summaries, or 4) More efficient architectures like "linear attention" that reduce computational requirements.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 5: Vector Databases & Embeddings -->
+        <div class="section" id="section4">
+            <h2>
+                <span class="material-symbols-outlined">dataset</span>
+                Vector Databases & Embeddings
+            </h2>
+            
+            <div class="concept-card">
+                <div class="concept-title">
+                    <span class="material-symbols-outlined">map</span>
+                    What are Embeddings?
+                </div>
+                <div class="concept-description">
+                    Imagine you could represent every word, sentence, or even image as a point in space. Similar things would be close together, and different things would be far apart. That's what embeddings do - they convert text, images, or other data into lists of numbers that capture their meaning. It's like giving every piece of information a unique "address" in a mathematical space.
+                </div>
+                
+                <div class="example-box">
+                    <div class="example-title">
+                        <span class="material-symbols-outlined">library_music</span>
+                        Real-World Example: Spotify Song Recommendations
+                    </div>
+                    <p>When Spotify recommends songs, it converts each song into an embedding based on features like tempo, genre, mood, and what other users with similar tastes enjoy. If you like energetic rock music, the AI finds other songs whose embeddings are "close" to your favorites in this mathematical space, even if they're by completely different artists you've never heard of.</p>
+                </div>
+            </div>
+
+            <div class="concept-card">
+                <div class="concept-title">
+                    <span class="material-symbols-outlined">storage</span>
+                    Vector Databases: Smart Storage
+                </div>
+                <div class="concept-description">
+                    A vector database is like a super-smart library that doesn't just organize books by title or author, but by their actual content and meaning. Instead of searching for exact word matches, you can find information that means the same thing, even if it uses completely different words.
+                </div>
+
+                <div class="example-box">
+                    <div class="example-title">
+                        <span class="material-symbols-outlined">medical_services</span>
+                        Real-World Example: Medical Diagnosis Assistant
+                    </div>
+                    <p>A doctor types "patient has chest pain and shortness of breath." The vector database doesn't just look for those exact words. It finds all medical records, research papers, and case studies related to similar symptoms - even those that use medical terms like "thoracic discomfort" or "dyspnea." This helps doctors consider diagnoses they might not have immediately thought of.</p>
+                </div>
+
+                <div class="fun-fact">
+                    <h4>🧠 Mind-Bending Fact</h4>
+                    <p>In embedding space, mathematical relationships work with words! For example: "King - Man + Woman = Queen" actually works mathematically. The embedding for "King" minus the embedding for "Man" plus the embedding for "Woman" gives you something very close to the embedding for "Queen"!</p>
+                </div>
+            </div>
+
+            <div class="quiz-section">
+                <div class="quiz-title">🧩 Test Your Understanding</div>
+                
+                <div class="question-card" onclick="toggleAnswer('q13')">
+                    <span class="difficulty-badge easy">EASY</span>
+                    <div class="question-text">Why would searching for "happy" in a vector database also find documents containing "joyful," "cheerful," and "delighted"?</div>
+                    <div class="answer" id="q13">
+                        <strong>Answer:</strong> Because all these words have similar meanings, their embeddings (mathematical representations) would be very close together in vector space. The database finds all words/documents that are "nearby" in meaning, not just exact word matches.
+                    </div>
+                </div>
+
+                <div class="question-card" onclick="toggleAnswer('q14')">
+                    <span class="difficulty-badge medium">MEDIUM</span>
+                    <div class="question-text">A job search website wants to match candidates to jobs based on skills and experience, not just keyword matching. How would vector embeddings improve this process?</div>
+                    <div class="answer" id="q14">
+                        <strong>Answer:</strong> Embeddings would capture the meaning and relationships between skills. A candidate with "machine learning" experience might match jobs requiring "AI development" or "predictive modeling," even though the exact words don't match. The system would understand that "5 years Python experience" is similar to "senior Python developer" and could match candidates with equivalent but differently-worded experience levels.
+                    </div>
+                </div>
+
+                <div class="question-card" onclick="toggleAnswer('q15')">
+                    <span class="difficulty-badge difficult">DIFFICULT</span>
+                    <div class="question-text">A company has customer support tickets in English, Spanish, and French, plus product manuals in all three languages. How could vector embeddings help create a multilingual search system, and what technical challenges might arise?</div>
+                    <div class="answer" id="q15">
+                        <strong>Answer:</strong> Multilingual embeddings can represent similar concepts close together regardless of language - so "help" (English), "ayuda" (Spanish), and "aide" (French) would have similar embeddings. This allows cross-language search where a Spanish query could find relevant English documentation. Challenges include: 1) Cultural context differences (concepts that exist in one culture but not others), 2) Idiomatic expressions that don't translate directly, 3) Technical terminology that varies between languages, 4) Ensuring balanced training data across languages to prevent bias toward dominant languages, and 5) Handling code-switching where multilingual users mix languages in their queries.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 6: Generative AI -->
+        <div class="section" id="section5">
+            <h2>
+                <span class="material-symbols-outlined">auto_awesome</span>
+                Generative AI
+            </h2>
+            
+            <div class="concept-card">
+                <div class="concept-title">
+                    <span class="material-symbols-outlined">brush</span>
+                    What is Generative AI?
+                </div>
+                <div class="concept-description">
+                    Generative AI is like having a creative partner who can make new things from scratch - write stories, create images, compose music, or even write computer code. It's different from other AI that just analyzes or recognizes things. Instead of just understanding what you show it, generative AI creates something completely new based on what it has learned.
+                </div>
+                
+                <div class="example-box">
+                    <div class="example-title">
+                        <span class="material-symbols-outlined">image</span>
+                        Real-World Example: DALL-E Image Creation
+                    </div>
+                    <p>You can tell DALL-E: "Draw a cat wearing a space suit riding a unicorn through a rainbow." Even though this exact image has never existed, DALL-E combines its knowledge of cats, space suits, unicorns, and rainbows to create a completely original image that matches your description. It's not copying - it's genuinely creating something new.</p>
+                </div>
+            </div>
+
+            <div class="concept-card">
+                <div class="concept-title">
+                    <span class="material-symbols-outlined">restaurant</span>
+                    How Does Generative AI Work?
+                </div>
+                <div class="concept-description">
+                    Think of generative AI like a master chef who has tasted thousands of dishes. The chef doesn't just memorize recipes - they understand flavors, techniques, and combinations so well that they can create entirely new dishes that still taste amazing. Generative AI learns patterns from millions of examples and uses that understanding to create original content.
+                </div>
+
+                <div class="example-box">
+                    <div class="example-title">
+                        <span class="material-symbols-outlined">campaign</span>
+                        Real-World Example: Content Creation for Marketing
+                    </div>
+                    <p>A small business owner needs social media posts but can't afford a marketing team. They tell generative AI: "Write 5 Instagram captions for a cozy coffee shop, emphasizing warmth and community." The AI creates original, engaging captions that fit the brand voice, each with different angles - morning motivation, afternoon comfort, weekend vibes, etc. Each caption is unique but captures the desired feeling.</p>
+                </div>
+
+                <div class="fun-fact">
+                    <h4>🎭 Creative Fact</h4>
+                    <p>Some AI-generated art has sold for hundreds of thousands of dollars at auctions! And AI has written symphonies, created fashion designs, and even helped discover new drug compounds. It's becoming a genuine creative collaborator!</p>
+                </div>
+            </div>
+
+            <div class="quiz-section">
+                <div class="quiz-title">🧩 Test Your Understanding</div>
+                
+                <div class="question-card" onclick="toggleAnswer('q16')">
+                    <span class="difficulty-badge easy">EASY</span>
+                    <div class="question-text">What's the main difference between a generative AI and a regular AI that recognizes images?</div>
+                    <div class="answer" id="q16">
+                        <strong>Answer:</strong> A regular AI recognizes and analyzes existing content ("This is a picture of a dog"), while generative AI creates new content from scratch ("Draw me a picture of a purple dog wearing sunglasses"). One understands what already exists, the other creates what has never existed before.
+                    </div>
+                </div>
+
+                <div class="question-card" onclick="toggleAnswer('q17')">
+                    <span class="difficulty-badge medium">MEDIUM</span>
+                    <div class="question-text">A teacher wants to create personalized math word problems for each student based on their interests (sports, video games, cooking, etc.). How would generative AI be better than using pre-written problem templates?</div>
+                    <div class="answer" id="q17">
+                        <strong>Answer:</strong> Generative AI can create unlimited unique problems tailored to each student's specific interests and skill level. Instead of filling in blanks in templates, it can generate completely original scenarios - a basketball problem for one student, a cooking problem for another, all at the appropriate difficulty level. It can also ensure variety so students don't get bored with repetitive formats.
+                    </div>
+                </div>
+
+                <div class="question-card" onclick="toggleAnswer('q18')">
+                    <span class="difficulty-badge difficult">DIFFICULT</span>
+                    <div class="question-text">A generative AI trained on classical music creates a "new" symphony that sounds remarkably similar to a famous piece by Mozart. What does this reveal about generative AI capabilities and limitations, and what ethical questions does it raise?</div>
+                    <div class="answer" id="q18">
+                        <strong>Answer:</strong> This reveals several key points: 1) Generative AI learns from patterns in training data and can sometimes reproduce too closely what it learned, 2) True creativity vs. sophisticated pattern matching is still debated, 3) The AI might be overfitting to prominent examples in its training. Ethical questions include: copyright and attribution (whose work is it?), the nature of creativity and originality, fair use of training data, and potential impact on human artists. It also raises questions about how we define "original" work when humans also learn by studying existing art.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 7: Context and Tokens -->
+        <div class="section" id="section6">
+            <h2>
+                <span class="material-symbols-outlined">token</span>
+                Context, Tokens, and Context Windows
+            </h2>
+            
+            <div class="concept-card">
+                <div class="concept-title">
+                    <span class="material-symbols-outlined">extension</span>
+                    Understanding Tokens
+                </div>
+                <div class="concept-description">
+                    Tokens are like puzzle pieces that AI uses to understand text. Instead of reading whole words like humans do, AI breaks text into smaller chunks - sometimes whole words, sometimes parts of words, sometimes even punctuation marks. It's like how you might break a long word into syllables to pronounce it better.
+                </div>
+                
+                <div class="example-box">
+                    <div class="example-title">
+                        <span class="material-symbols-outlined">sms</span>
+                        Real-World Example: Text Messaging Character Limits
+                    </div>
+                    <p>Remember when text messages had 160-character limits? AI has similar limits but with tokens. The phrase "I'm unforgettable!" might be broken into tokens like: "I", "'m", "un", "forget", "table", "!". Understanding this helps explain why AI sometimes has trouble with very long conversations or documents.</p>
+                </div>
+            </div>
+
+            <div class="concept-card">
+                <div class="concept-title">
+                    <span class="material-symbols-outlined">memory</span>
+                    Context: AI's Short-Term Memory
+                </div>
+                <div class="concept-description">
+                    Context is everything the AI remembers from your current conversation. It's like the AI's short-term memory - it can remember what you talked about earlier in the chat, but it has limits. The "context window" is how much it can remember at once, like having a notepad that only fits a certain number of pages.
+                </div>
+
+                <div class="example-box">
+                    <div class="example-title">
+                        <span class="material-symbols-outlined">local_hospital</span>
+                        Real-World Example: Medical Consultation Chatbot
+                    </div>
+                    <p>When you tell a medical AI "I have a headache," then later ask "Should I be worried about it?", the AI uses context to know "it" refers to your headache. But if you have a very long conversation about many symptoms, it might "forget" the headache mentioned at the beginning because it falls outside its context window - like pages falling off the back of that notepad.</p>
+                </div>
+
+                <div class="fun-fact">
+                    <h4>📏 Size Comparison</h4>
+                    <p>Early AI models could only remember about 2,000 tokens (roughly 1,500 words). Modern models like GPT-4 can handle over 100,000 tokens - that's like remembering an entire short book during your conversation!</p>
+                </div>
+            </div>
+
+            <div class="quiz-section">
+                <div class="quiz-title">🧩 Test Your Understanding</div>
+                
+                <div class="question-card" onclick="toggleAnswer('q19')">
+                    <span class="difficulty-badge easy">EASY</span>
+                    <div class="question-text">Why might an AI forget what you talked about at the beginning of a very long conversation?</div>
+                    <div class="answer" id="q19">
+                        <strong>Answer:</strong> Because the AI has a limited context window (like short-term memory). When the conversation gets too long, the oldest parts fall out of its "memory" to make room for new information. It's like a notepad with limited pages - when you add new pages at the back, the old ones at the front fall off.
+                    </div>
+                </div>
+
+                <div class="question-card" onclick="toggleAnswer('q20')">
+                    <span class="difficulty-badge medium">MEDIUM</span>
+                    <div class="question-text">You're using AI to help write a research paper. You give it a 20-page document to analyze, but the AI can only handle 10 pages worth of tokens at once. How might you work around this limitation?</div>
+                    <div class="answer" id="q20">
+                        <strong>Answer:</strong> You could: 1) Break the document into smaller sections and analyze each separately, 2) Ask the AI to summarize each section first, then work with the summaries, 3) Focus on specific parts most relevant to your research question, or 4) Use the AI to extract key points from each section and then combine them. The key is working within the AI's memory limits while still getting the help you need.
+                    </div>
+                </div>
+
+                <div class="question-card" onclick="toggleAnswer('q21')">
+                    <span class="difficulty-badge difficult">DIFFICULT</span>
+                    <div class="question-text">A customer service AI needs to help with complex technical issues that might require referencing product manuals, previous tickets, and troubleshooting steps - potentially more information than fits in the context window. How might a company architect their AI system to handle this effectively?</div>
+                    <div class="answer" id="q21">
+                        <strong>Answer:</strong> The company might use a multi-stage approach: 1) Use a vector database to store all documentation and retrieve only relevant sections for each query, 2) Implement conversation summarization to compress long interactions, 3) Create a ticket history summary system that keeps key context without full conversations, 4) Use specialized retrieval-augmented generation (RAG) to pull in relevant documentation on-demand, and 5) Design the AI to ask clarifying questions to focus on the most important information. This creates a system that feels like it has unlimited memory while actually working within token limits.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 8: AI Generation Parameters -->
+        <div class="section" id="section7">
+            <h2>
+                <span class="material-symbols-outlined">tune</span>
+                AI Generation Parameters
+            </h2>
+            
+            <div class="concept-card">
+                <div class="concept-title">
+                    <span class="material-symbols-outlined">palette</span>
+                    Controlling AI Creativity
+                </div>
+                <div class="concept-description">
+                    AI generation parameters are like knobs on a radio that control how the AI responds. You can make it more creative and surprising, or more predictable and safe. It's like choosing between asking a spontaneous friend for advice (who might give wild, creative ideas) versus asking a careful, methodical friend (who gives reliable, expected answers).
+                </div>
+                
+                <div class="example-box">
+                    <div class="example-title">
+                        <span class="material-symbols-outlined">menu_book</span>
+                        Real-World Example: Creative Writing Assistant
+                    </div>
+                    <p>If you're writing a children's story, you might want the AI to be creative and fun (high creativity settings). But if you're writing a medical report, you'd want it to be precise and factual (low creativity settings). Same AI, different settings, completely different types of responses.</p>
+                </div>
+            </div>
+
+            <div class="concept-card">
+                <div class="concept-title">
+                    <span class="material-symbols-outlined">settings</span>
+                    Key Parameters Explained
+                </div>
+                <div class="concept-description">
+                    <strong>Temperature:</strong> Controls randomness. Low = predictable and safe, High = creative and surprising.<br><br>
+                    <strong>Top-K:</strong> Limits choices to the K most likely options. Like only considering the top 5 most probable next words.<br><br>
+                    <strong>Top-P:</strong> Considers options until their combined probability reaches P%. More dynamic than Top-K.
+                </div>
+
+                <div class="example-box">
+                    <div class="example-title">
+                        <span class="material-symbols-outlined">library_music</span>
+                        Real-World Example: Music Composition AI
+                    </div>
+                    <p><strong>Low Temperature:</strong> Might create safe, familiar-sounding melodies similar to training data.<br>
+                    <strong>High Temperature:</strong> Could create experimental, avant-garde music with unexpected combinations.<br>
+                    <strong>Top-K=5:</strong> Only considers the 5 most likely next notes, keeping it musical.<br>
+                    <strong>Top-P=0.9:</strong> Considers notes until 90% probability is covered, adapting to the musical context.</p>
+                </div>
+
+                <div class="fun-fact">
+                    <h4>🎨 Creative Balance</h4>
+                    <p>Professional AI applications often use different parameter settings for different parts of the same task - high creativity for brainstorming ideas, then low creativity for organizing and editing those ideas!</p>
+                </div>
+            </div>
+
+            <div class="quiz-section">
+                <div class="quiz-title">🧩 Test Your Understanding</div>
+                
+                <div class="question-card" onclick="toggleAnswer('q22')">
+                    <span class="difficulty-badge easy">EASY</span>
+                    <div class="question-text">You want an AI to help write professional emails. Should you use high or low temperature settings, and why?</div>
+                    <div class="answer" id="q22">
+                        <strong>Answer:</strong> Low temperature. Professional emails need to be clear, appropriate, and predictable. High temperature might make the AI too creative, potentially using inappropriate language or unusual phrasing that could hurt your professional image.
+                    </div>
+                </div>
+
+                <div class="question-card" onclick="toggleAnswer('q23')">
+                    <span class="difficulty-badge medium">MEDIUM</span>
+                    <div class="question-text">A game developer wants AI to create dialogue for NPCs (non-player characters). Some NPCs should be predictable quest-givers, others should be quirky, memorable characters. How might they adjust parameters differently?</div>
+                    <div class="answer" id="q23">
+                        <strong>Answer:</strong> For quest-givers: Low temperature, moderate Top-K to ensure clear, consistent instructions. For quirky characters: Higher temperature for personality, possibly higher Top-K for more varied vocabulary and surprising responses. They might also use different prompts to establish character personality, then adjust parameters to control how much that personality can vary in responses.
+                    </div>
+                </div>
+
+                <div class="question-card" onclick="toggleAnswer('q24')">
+                    <span class="difficulty-badge difficult">DIFFICULT</span>
+                    <div class="question-text">A legal AI assistant needs to draft contracts that are both legally sound and tailored to specific situations. How might different generation parameters be used throughout the drafting process, and what risks need to be managed?</div>
+                    <div class="answer" id="q24">
+                        <strong>Answer:</strong> The process might use: 1) Low temperature for standard legal clauses to ensure accuracy, 2) Moderate temperature for customizing clauses to specific situations, 3) Very low temperature for critical legal language that must be precise. Risks include: legal liability if AI creates incorrect clauses, need for human lawyer review, potential hallucination of non-existent laws, and ensuring the AI doesn't create contradictory terms. The system would likely use conservative parameters with extensive human oversight, and might use retrieval systems to reference actual legal precedents rather than generating legal concepts from scratch.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 9: Prompt Engineering -->
+        <div class="section" id="section8">
+            <h2>
+
+        <div class="concept-card">
+            <div class="concept-title">
+                <span class="material-symbols-outlined">chat</span>
+                The Art of Asking AI
+            </div>
+            <div class="concept-description">
+                Prompt engineering is like learning how to ask really good questions. Just like how asking your friend "What should I do?" gives a vague answer, but asking "What's a fun, indoor activity for a rainy Saturday that costs under $20?" gets you exactly what you need. The way you ask AI determines the quality of response you get.
+            </div>
+            
+            <div class="example-box">
+                <div class="example-title">
+                    <span class="material-symbols-outlined">work</span>
+                    Real-World Example: Job Interview Preparation
+                </div>
+                <p><strong>Bad Prompt:</strong> "Help me with interview questions."<br>
+                <strong>Good Prompt:</strong> "I'm interviewing for a marketing manager role at a tech startup. Create 10 behavioral interview questions they might ask, with example STAR method answers focusing on digital marketing campaigns and team leadership experience."<br><br>
+                The specific prompt gives you exactly what you need to practice!</p>
+            </div>
+        </div>
+
+        <div class="concept-card">
+            <div class="concept-title">
+                <span class="material-symbols-outlined">build</span>
+                Prompt Engineering Techniques
+            </div>
+            <div class="concept-description">
+                <strong>Be Specific:</strong> Include details about what you want, how you want it, and who it's for.<br><br>
+                <strong>Give Examples:</strong> Show the AI what good output looks like.<br><br>
+                <strong>Set the Role:</strong> Tell the AI to act as an expert in the field.<br><br>
+                <strong>Define the Format:</strong> Specify if you want bullets, paragraphs, tables, etc.
+            </div>
+
+            <div class="example-box">
+                <div class="example-title">
+                    <span class="material-symbols-outlined">restaurant</span>
+                    Real-World Example: Recipe Creation
+                </div>
+                <p><strong>Basic:</strong> "Give me a recipe."<br>
+                <strong>Engineered:</strong> "You are a professional chef. Create a healthy, 30-minute dinner recipe for 4 people using chicken breast, vegetables, and minimal oil. Include prep time, cooking steps numbered clearly, and nutritional information. Make it suitable for beginners who don't have advanced cooking skills."<br><br>
+                The engineered prompt gives you a complete, usable recipe!</p>
+            </div>
+
+            <div class="fun-fact">
+                <h4>💼 Career Opportunity</h4>
+                <p>Prompt Engineering is becoming a real job! Companies are hiring "Prompt Engineers" who specialize in getting the best results from AI systems. Some positions pay over $300,000 per year!</p>
+            </div>
+        </div>
+
+        <div class="quiz-section">
+            <div class="quiz-title">🧩 Test Your Understanding</div>
+            
+            <div class="question-card" onclick="toggleAnswer('q25')">
+                <span class="difficulty-badge easy">EASY</span>
+                <div class="question-text">What's wrong with the prompt "Make it better" when asking AI to improve your writing?</div>
+                <div class="answer" id="q25">
+                    <strong>Answer:</strong> It's too vague! The AI doesn't know what "better" means to you. Does it mean shorter, longer, more formal, simpler, more persuasive? A better prompt would specify exactly what improvements you want, like "Make this email more professional and concise, keeping it under 100 words."
+                </div>
+            </div>
+
+            <div class="question-card" onclick="toggleAnswer('q26')">
+                <span class="difficulty-badge medium">MEDIUM</span>
+                <div class="question-text">You want AI to help create social media content for your pet grooming business. Write a well-engineered prompt that would get you useful, branded content.</div>
+                <div class="answer" id="q26">
+                    <strong>Answer:</strong> "You are a social media marketing expert for pet businesses. Create 5 Instagram post ideas for a friendly, local pet grooming salon called 'Pawsome Cuts.' Each post should include: a catchy caption under 150 characters, relevant hashtags, and suggest what type of photo to use. Focus on showcasing happy pets, grooming tips, and building trust with pet parents. Keep the tone warm, professional, and dog/cat-loving."
+                </div>
+            </div>
+
+            <div class="question-card" onclick="toggleAnswer('q27')">
+                <span class="difficulty-badge difficult">DIFFICULT</span>
+                <div class="question-text">A medical research team wants to use AI to help analyze patient symptoms and suggest possible diagnoses for doctors to consider. What are the critical considerations for engineering prompts in this high-stakes scenario?</div>
+                <div class="answer" id="q27">
+                    <strong>Answer:</strong> Critical considerations include: 1) Never suggesting definitive diagnoses, only "considerations for evaluation," 2) Always emphasizing the need for professional medical judgment, 3) Including disclaimers about emergency situations, 4) Structuring prompts to request evidence-based reasoning, 5) Asking for differential diagnoses ranked by likelihood with supporting evidence, 6) Requesting red flag symptoms that require immediate attention, 7) Ensuring prompts don't lead to bias (age, gender, race), and 8) Including requirements to cite medical literature or guidelines. The prompt must make clear the AI is a research tool, not a diagnostic tool, and all outputs require physician review.
+                </div>
+            </div>
+        </div>
+
+        <div class="phase-complete">
+            <h3>🎉 Phase 1 Complete!</h3>
+            <p>Congratulations! You've completed Phase 1 of your AI journey! You now understand the fundamentals of AI, from basic concepts to practical applications. You're now ready to move on to Phase 2, where we'll dive deeper into Context Engineering and Advanced Prompt Engineering techniques.</p>
+            
+            <div style="margin: 2rem 0;">
+                <h4>🚀 Your Next Steps</h4>
+                <p>In Phase 2, you'll learn:</p>
+                <ul>
+                    <li>Advanced prompt engineering strategies</li>
+                    <li>Context engineering for complex AI applications</li>
+                    <li>Memory management in long AI conversations</li>
+                    <li>Integrating external knowledge with AI</li>
+                    <li>Professional implementation techniques</li>
+                </ul>
+                <p>Click the button below to continue your learning journey!</p>
+            </div>
+
+            <a href="#" class="next-phase-btn">
+                Continue to Phase 2: Advanced Training
                 <span class="material-symbols-outlined">arrow_forward</span>
-            </button>
+            </a>
         </div>
     </div>
 
-    <script>
-        let currentSection = 0;
-        const totalSections = 9;
-        const completedSections = new Set();
+    <!-- Navigation -->
+    <div class="navigation">
+        <button class="nav-btn" id="prevBtn" onclick="previousSection()" disabled>
+            <span class="material-symbols-outlined">arrow_back</span>
+            Previous
+        </button>
+        <button class="nav-btn" id="nextBtn" onclick="nextSection()">
+            Next
+            <span class="material-symbols-outlined">arrow_forward</span>
+        </button>
+    </div>
+</div>
 
-        function updateProgress() {
-            const progress = ((currentSection + 1) / totalSections) * 100;
-            document.getElementById('progressFill').style.width = progress + '%';
-            document.getElementById('progressText').textContent = 
-                `Section ${currentSection + 1} of ${totalSections} - ${getSectionTitle(currentSection)}`;
-        }
+<script>
+    let currentSection = 0;
+    const totalSections = 9;
+    const completedSections = new Set();
 
-        function getSectionTitle(index) {
-            const titles = [
-                "Understanding AI",
-                "Machine Learning",
-                "Language Models",
-                "Transformers",
-                "Vector Databases",
-                "Generative AI",
-                "Context & Tokens",
-                "AI Parameters",
-                "Prompt Engineering"
-            ];
-            return titles[index];
-        }
+    function updateProgress() {
+        const progress = ((currentSection + 1) / totalSections) * 100;
+        document.getElementById('progressFill').style.width = progress + '%';
+        document.getElementById('progressText').textContent = 
+            `Section ${currentSection + 1} of ${totalSections} - ${getSectionTitle(currentSection)}`;
+    }
 
-        function showSection(index) {
-            // Hide all sections
-            document.querySelectorAll('.section').forEach(section => {
-                section.classList.remove('active');
-            });
-            
-            // Show current section
-            document.getElementById(`section${index}`).classList.add('active');
-            
-            // Update navigation buttons
-            document.getElementById('prevBtn').disabled = index === 0;
-            document.getElementById('nextBtn').disabled = index === totalSections - 1;
-            
-            if (index === totalSections - 1) {
-                document.getElementById('nextBtn').innerHTML = 
-                    'Course Complete! <span class="material-symbols-outlined">celebration</span>';
-            } else {
-                document.getElementById('nextBtn').innerHTML = 
-                    'Next <span class="material-symbols-outlined">arrow_forward</span>';
-            }
-            
-            // Update table of contents
-            updateTableOfContents();
-            
-            // Mark section as completed when viewed
-            completedSections.add(index);
-            
-            // Update progress
-            updateProgress();
-            
-            // Scroll to top
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
+    function getSectionTitle(index) {
+        const titles = [
+            "Understanding AI",
+            "Machine Learning",
+            "Language Models",
+            "Transformers",
+            "Vector Databases",
+            "Generative AI",
+            "Context & Tokens",
+            "AI Parameters",
+            "Prompt Engineering"
+        ];
+        return titles[index];
+    }
 
-        function updateTableOfContents() {
-            const tocItems = document.querySelectorAll('.toc-item');
-            tocItems.forEach((item, index) => {
-                item.classList.remove('active', 'completed');
-                if (index === currentSection) {
-                    item.classList.add('active');
-                } else if (completedSections.has(index)) {
-                    item.classList.add('completed');
-                }
-            });
-        }
-
-        function nextSection() {
-            if (currentSection < totalSections - 1) {
-                currentSection++;
-                showSection(currentSection);
-            }
-        }
-
-        function previousSection() {
-            if (currentSection > 0) {
-                currentSection--;
-                showSection(currentSection);
-            }
-        }
-
-        function goToSection(index) {
-            currentSection = index;
-            showSection(currentSection);
-        }
-
-        function toggleAnswer(questionId) {
-            const answer = document.getElementById(questionId);
-            const isVisible = answer.style.display === 'block';
-            answer.style.display = isVisible ? 'none' : 'block';
-            
-            if (!isVisible) {
-                answer.style.opacity = '0';
-                setTimeout(() => {
-                    answer.style.opacity = '1';
-                    answer.style.transition = 'opacity 0.4s ease';
-                }, 10);
-            }
-        }
-
-        // Keyboard navigation
-        document.addEventListener('keydown', function(event) {
-            if (event.key === 'ArrowLeft') {
-                previousSection();
-            } else if (event.key === 'ArrowRight') {
-                nextSection();
-            }
+    function showSection(index) {
+        // Hide all sections
+        document.querySelectorAll('.section').forEach(section => {
+            section.classList.remove('active');
         });
-
-        // Initialize
-        updateProgress();
+        
+        // Show current section
+        document.getElementById(`section${index}`).classList.add('active');
+        
+        // Update navigation buttons
+        document.getElementById('prevBtn').disabled = index === 0;
+        document.getElementById('nextBtn').disabled = index === totalSections - 1;
+        
+        if (index === totalSections - 1) {
+            document.getElementById('nextBtn').innerHTML = 
+                'Phase Complete! <span class="material-symbols-outlined">celebration</span>';
+        } else {
+            document.getElementById('nextBtn').innerHTML = 
+                'Next <span class="material-symbols-outlined">arrow_forward</span>';
+        }
+        
+        // Update table of contents
         updateTableOfContents();
         
-        // Add interaction feedback
-        document.querySelectorAll('.question-card').forEach(card => {
-            card.addEventListener('click', function() {
-                this.style.transform = 'scale(0.98) translateY(-2px)';
-                setTimeout(() => {
-                    this.style.transform = 'translateY(-2px)';
-                }, 150);
-            });
+        // Mark section as completed when viewed
+        completedSections.add(index);
+        
+        // Update progress
+        updateProgress();
+        
+        // Scroll to top
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function updateTableOfContents() {
+        const tocItems = document.querySelectorAll('.toc-item');
+        tocItems.forEach((item, index) => {
+            item.classList.remove('active', 'completed');
+            if (index === currentSection) {
+                item.classList.add('active');
+            } else if (completedSections.has(index)) {
+                item.classList.add('completed');
+            }
         });
-    </script>
-</body>
-</html>
+    }
+
+    function nextSection() {
+        if (currentSection < totalSections - 1) {
+            currentSection++;
+            showSection(currentSection);
+        }
+    }
+
+    function previousSection() {
+        if (currentSection > 0) {
+            currentSection--;
+            showSection(currentSection);
+        }
+    }
+
+    function goToSection(index) {
+        currentSection = index;
+        showSection(currentSection);
+    }
+
+    function toggleAnswer(questionId) {
+        const answer = document.getElementById(questionId);
+        const isVisible = answer.style.display === 'block';
+        answer.style.display = isVisible ? 'none' : 'block';
+        
+        if (!isVisible) {
+            answer.style.opacity = '0';
+            setTimeout(() => {
+                answer.style.opacity = '1';
+                answer.style.transition = 'opacity 0.4s ease';
+            }, 10);
+        }
+    }
+
+    // Keyboard navigation
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'ArrowLeft') {
+            previousSection();
+        } else if (event.key === 'ArrowRight') {
+            nextSection();
+        }
+    });
+
+    // Initialize
+    updateProgress();
+    updateTableOfContents();
+    
+    // Add interaction feedback
+    document.querySelectorAll('.question-card').forEach(card => {
+        card.addEventListener('click', function() {
+            this.style.transform = 'scale(0.98) translateY(-2px)';
+            setTimeout(() => {
+                this.style.transform = 'translateY(-2px)';
+            }, 150);
+        });
+    });
+    
+    // Set initial progress
+    document.getElementById('progressFill').style.width = `${(100 / totalSections)}%`;
+</script>
