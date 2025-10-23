@@ -281,6 +281,37 @@
             padding-left: 22rem;
         }
 
+        .phase-navigation {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 1.5rem;
+        }
+
+        .return-home-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.25rem;
+            border-radius: 999px;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(17, 147, 212, 0.1);
+        }
+
+        .return-home-button:hover {
+            background: var(--bg-tertiary);
+            border-color: var(--primary-color);
+            transform: translateY(-2px);
+        }
+
+        .return-home-button .material-symbols-outlined {
+            font-size: 20px;
+        }
+
         .hero {
             text-align: center;
             padding: 3rem 0;
@@ -679,7 +710,11 @@
             .container.sidebar-open {
                 padding-left: 1rem;
             }
-            
+
+            .phase-navigation {
+                justify-content: center;
+            }
+
             .hero h1 {
                 font-size: 2.5rem;
             }
@@ -824,6 +859,12 @@
     </div>
 
     <div class="container" id="mainContainer">
+        <div class="phase-navigation">
+            <a href="index.html" class="return-home-button">
+                <span class="material-symbols-outlined">arrow_back</span>
+                Back to Phase 1 Overview
+            </a>
+        </div>
         <div class="hero">
             <div class="phase-badge">
                 <span class="material-symbols-outlined" style="font-size: 18px;">rocket_launch</span>
